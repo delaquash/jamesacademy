@@ -1,19 +1,45 @@
-import { ThemeProvider } from '@react-navigation/native'
-import { Stack } from 'expo-router'
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React from "react";
+import { SplashScreen, Stack } from "expo-router";
+import { ThemeProvider, useTheme } from "@/context/ThemeContext";
+import {
+  Poppins_600SemiBold,
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_700Bold,
+  Poppins_500Medium,
+  useFonts,
+} from "@expo-google-fonts/poppins";
+import { withIAPContext } from "react-native-iap";
+// import { NotificationProvider } from "@/context/notification.provider";
+import { LogBox } from "react-native";
 
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+// SplashScreen.preventAutoHideAsync();
 
-const _layout = () => {
+LogBox.ignoreAllLogs();
+
+function RootLayout() {
+  const [loaded] = useFonts({
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    Poppins_600SemiBold,
+    Poppins_300Light,
+    Poppins_700Bold,
+    Poppins_400Regular,
+    Poppins_500Medium,
+  });
+
   return (
     <ThemeProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name='index' />
-      </Stack>
+      {/* <NotificationProvider> */}
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="index" />
+          <Stack.Screen name="(routes)/onboarding/index" />
+          <Stack.Screen name="(routes)/course-access" />
+          <Stack.Screen name="(routes)/notification/index" />
+        </Stack>
+      {/* </NotificationProvider> */}
     </ThemeProvider>
-  )
+  );
 }
 
-export default _layout
-
-const styles = StyleSheet.create({})
+export default withIAPContext(RootLayout);
