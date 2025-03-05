@@ -1,4 +1,4 @@
-// import { IsIPAD } from "@/themes/app.constant";
+import { IsIPAD } from "@/themes/app.constant";
 import { Dimensions, Image } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 //@ts-ignore
@@ -17,8 +17,8 @@ export const onBoardingSlides: onBoardingSlidesTypes[] = [
       <Image
         source={One}
         style={{
-        //   width: IsIPAD ? verticalScale(285) : verticalScale(320),
-        //   height: IsIPAD ? verticalScale(345) : verticalScale(330),
+          width: IsIPAD ? verticalScale(285) : verticalScale(320),
+          height: IsIPAD ? verticalScale(345) : verticalScale(330),
         }}
       />
     ),
@@ -33,8 +33,8 @@ export const onBoardingSlides: onBoardingSlidesTypes[] = [
       <Image
         source={Two}
         style={{
-        //   width: IsIPAD ? scale(285) : scale(320),
-        //   height: IsIPAD ? verticalScale(345) : verticalScale(330),
+          width: IsIPAD ? scale(285) : scale(320),
+          height: IsIPAD ? verticalScale(345) : verticalScale(330),
         }}
       />
     ),
@@ -48,8 +48,8 @@ export const onBoardingSlides: onBoardingSlidesTypes[] = [
       <Image
         source={Three}
         style={{
-        //   width: IsIPAD ? scale(285) : scale(320),
-        //   height: IsIPAD ? verticalScale(345) : verticalScale(330),
+          width: IsIPAD ? scale(285) : scale(320),
+          height: IsIPAD ? verticalScale(345) : verticalScale(330),
         }}
       />
     ),
