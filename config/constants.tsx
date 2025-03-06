@@ -61,11 +61,12 @@ export const onBoardingSlides: onBoardingSlidesTypes[] = [
 ];
 
 // onboarding variables
-export enum Side {
-  LEFT,
-  RIGHT,
+export enum WaveEnum {
   NONE,
+  LEFT,
+  RIGHT
 }
+
 export const MIN_LEDGE = 25;
 export const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
 export const MARGIN_WIDTH = MIN_LEDGE + 50;

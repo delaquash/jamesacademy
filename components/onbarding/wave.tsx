@@ -1,11 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-export enum WaveEnum {
-    NONE,
-    LIFT,
-    RIGHT
-}
+
 
 const wave = () => {
   return (
