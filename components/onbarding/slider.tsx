@@ -13,7 +13,7 @@ interface SliderProps {
     setIndex: (value : number) => void;
     prev?: JSX.Element;
     next?: JSX.Element;
-    children: JSX.Element;
+    children?: JSX.Element;
 }
 
 const Slider = ({ children: current, index,setIndex,next,prev}: SliderProps) => {
