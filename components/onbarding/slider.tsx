@@ -1,11 +1,12 @@
-import React, { Component, useEffect } from 'react'
-import { Platform, Text, View } from 'react-native'
+import React, {  useEffect } from 'react'
+import { Platform, Text, View, StyleSheet } from 'react-native'
 import { JSX } from 'react/jsx-runtime';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated"
 import { WaveEnum } from '@/config/constants';
 import { snapPoint, useVector } from 'react-native-redash';
-import { HEIGHT, LEFT_SNAP_POINTS, MARGIN_WIDTH, MIN_LEDGE, NEXT, PREV, RIGHT_SNAP_POINTS, Side, WIDTH } from '@/config/constants';
+import { HEIGHT, LEFT_SNAP_POINTS, MARGIN_WIDTH, MIN_LEDGE, NEXT, PREV, RIGHT_SNAP_POINTS, WIDTH } from '@/config/constants';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import Wave from './wave';
 
 
 interface SliderProps {
@@ -104,13 +105,26 @@ const Slider = ({ children: current, index,setIndex,next,prev}: SliderProps) => 
                 {prev && 
                     (
                         <Animated.View style={[StyleSheet.absoluteFill, leftStyle]}>
-
+                            <Wave 
+                                side={WaveEnum.LEFT}
+                                position={left}
+                                isTransitioning={isTransitionLeft}
+                            
+                            >
+                               {prev}
+                            </Wave>
                         </Animated.View>
                     )
                 }
                 {next && (
                     <View style={StyleSheet.absoluteFill}>
-
+                        <Wave 
+                            side={WaveEnum.RIGHT}
+                            position={right}
+                            isTransitioning={isTransitionRight}    
+                        >
+                               {next}
+                            </Wave>
                     </View>
                 )}
             </Animated.View>

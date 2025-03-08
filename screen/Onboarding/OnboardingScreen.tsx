@@ -15,8 +15,22 @@ const OnboardingScreen = () => {
         <Slider 
             index={index}
             setIndex={setIndex}
-            prev={prev && <Slide slide={prev} totalSlides={onBoardingSlides.length} />}
-            next={next && <Slide slide={next} totalSlides={onBoardingSlides.length} />}
+            prev={prev && (
+              <Slide
+                index={index}
+                setIndex={setIndex}
+                slide={prev} 
+                totalSlides={onBoardingSlides.length}
+             />
+            )}
+            next={next && (
+              <Slide
+              index={index}
+              setIndex={setIndex}
+              slide={prev} 
+              totalSlides={onBoardingSlides.length}
+           />
+            )}
         >
         <Slide 
           slide={onBoardingSlides[index]}
@@ -24,7 +38,7 @@ const OnboardingScreen = () => {
           setIndex={setIndex}
           totalSlides={onBoardingSlides.length}
         />
-        
+
         </Slider>
     </GestureHandlerRootView>
   )
