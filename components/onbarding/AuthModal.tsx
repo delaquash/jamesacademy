@@ -1,5 +1,5 @@
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { BlurView } from "expo-blur";
 import { fontSizes, windowHeight, windowWidth } from "@/themes/app.constant";
 import { Image } from "react-native";
@@ -11,8 +11,16 @@ const AuthModal = () => {
             GoogleSignin.configure({
                 iosClientId: process.env.EXPO_PUBLIC_IOS_GOOGLE_API_KEY,
             })
+        } else {
+          GoogleSignin.configure({ 
+              webClientId: process.env.EXPO_PUBLIC_ANDROID_GOOGLE_API_KEY,
+          })
         }
     }
+
+    useEffect(()=> {
+      configureGoogleSignIn();
+    }, [])
 
     const googleSignIn = async() => {}
   return (
