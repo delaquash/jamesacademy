@@ -9,10 +9,12 @@ const AuthModal = () => {
     const configureGoogleSignIn = () => {
         if(Platform.OS === "ios"){
             GoogleSignin.configure({
-
+                iosClientId: process.env.EXPO_PUBLIC_IOS_GOOGLE_API_KEY,
             })
         }
     }
+
+    const googleSignIn = async() => {}
   return (
     <BlurView
       style={{ flex: 1, justifyContent: "center", alignItems: "center" }}

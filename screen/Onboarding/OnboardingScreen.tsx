@@ -45,5 +45,3 @@ const OnboardingScreen = () => {
 }
 
 export default OnboardingScreen
-
-const styles = StyleSheet.create({})
