@@ -22,7 +22,15 @@ const AuthModal = () => {
       configureGoogleSignIn();
     }, [])
 
-    const googleSignIn = async() => {}
+    const googleSignIn = async() => {
+      try {
+        await GoogleSignin.hasPlayServices();
+        const userInfo = await GoogleSignin.signIn();
+        console.log(userInfo)
+      } catch (error) {
+        
+      }
+    }
   return (
     <BlurView
       style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
