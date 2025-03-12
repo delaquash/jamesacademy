@@ -4,6 +4,13 @@ import { BlurView } from "expo-blur";
 import { fontSizes, windowHeight, windowWidth } from "@/themes/app.constant";
 import { Image } from "react-native";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import JWT from "expo-jwt";
+
+interface AuthHandlerProps {
+  name: string;
+  email: string;
+  avatar: string;
+}
 
 const AuthModal = () => {
     const configureGoogleSignIn = () => {
@@ -22,15 +29,32 @@ const AuthModal = () => {
       configureGoogleSignIn();
     }, [])
 
+    const authHandler = async({ name, email, avatar}:AuthHandlerProps) => {
+      const user = {
+        name,
+        email,
+        avatar,
+      }
+
+      const token = JWT.encode({...user}, process.env.EXPO_PUBLIC_JWT_SECRET!);
+    }
+
     const googleSignIn = async() => {
       try {
         await GoogleSignin.hasPlayServices();
         const userInfo = await GoogleSignin.signIn();
         console.log(userInfo)
+        await authHandler({
+          name: userInfo.data?.user.name!,
+          email: userInfo.data?.user.email!,
+          avatar: userInfo.data?.user.photo!,
+        })
       } catch (error) {
-        
+        console.log(error)
       }
     }
+
+   
   return (
     <BlurView
       style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
