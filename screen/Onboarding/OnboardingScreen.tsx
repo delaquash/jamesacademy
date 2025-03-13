@@ -27,7 +27,7 @@ const OnboardingScreen = () => {
               <Slide
               index={index}
               setIndex={setIndex}
-              slide={prev} 
+              slide={next} 
               totalSlides={onBoardingSlides.length}
            />
             )}

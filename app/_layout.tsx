@@ -33,7 +33,7 @@ function RootLayout() {
       {/* <NotificationProvider> */}
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="index" />
-          <Stack.Screen name="/(routes)/onboarding" />
+          <Stack.Screen name="/(routes)/onboarding/index" />
           {/* <Stack.Screen name="(routes)/course-access" />
           <Stack.Screen name="(routes)/notification/index" /> */}
         </Stack>
