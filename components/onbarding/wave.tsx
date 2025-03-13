@@ -3,7 +3,6 @@ import React from 'react'
 import Svg, {Path} from "react-native-svg";
 import Animated, { SharedValue, useAnimatedProps, useAnimatedStyle, useDerivedValue, withSpring, withTiming } from 'react-native-reanimated';
 import { HEIGHT, MIN_LEDGE, WaveEnum, WIDTH } from '@/config/constants';
-
 import MaskedView from "@react-native-community/masked-view";
 import { Vector } from 'react-native-redash';
 

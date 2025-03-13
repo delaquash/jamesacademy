@@ -9,7 +9,7 @@ import {
   Poppins_500Medium,
   useFonts,
 } from "@expo-google-fonts/poppins";
-import { withIAPContext } from "react-native-iap";
+// import { withIAPContext } from "react-native-iap";
 // import { NotificationProvider } from "@/context/notification.provider";
 import { LogBox } from "react-native";
 
@@ -33,7 +33,7 @@ function RootLayout() {
       {/* <NotificationProvider> */}
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="index" />
-          <Stack.Screen name="(routes)/onboarding/index" />
+          <Stack.Screen name="/(routes)/onboarding" />
           {/* <Stack.Screen name="(routes)/course-access" />
           <Stack.Screen name="(routes)/notification/index" /> */}
         </Stack>
@@ -42,4 +42,4 @@ function RootLayout() {
   );
 }
 
-export default withIAPContext(RootLayout);
+export default RootLayout;

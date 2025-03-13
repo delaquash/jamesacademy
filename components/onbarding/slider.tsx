@@ -1,6 +1,6 @@
 import React, {  useEffect } from 'react'
 import { Platform, Text, View, StyleSheet } from 'react-native'
-import { JSX } from 'react/jsx-runtime';
+// import { JSX } from 'react/jsx-runtime';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated"
 import { WaveEnum } from '@/config/constants';
 import { snapPoint, useVector } from 'react-native-redash';
