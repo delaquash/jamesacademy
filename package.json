@@ -2,6 +2,15 @@
   "name": "jamesacademy",
   "main": "expo-router/entry",
   "version": "1.0.0",
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "exclude": ["@react-native-community/masked-view", "react-native-status-bar-height", "react-native-swiper"],
+        "listUnknownPackages": false
+      }
+    }
+  },
+  "description": "This project is a boilerplate for a React Native app with Expo.",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",

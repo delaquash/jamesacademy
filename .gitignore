@@ -21,10 +21,10 @@ expo-env.d.ts
 .metro-health-check*
 
 # Android
-"/android"
+/android
 
 # iOS
-"/ios"
+/ios
 
 # debug
 npm-debug.*
