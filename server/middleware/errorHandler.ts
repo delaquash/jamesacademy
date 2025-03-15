@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 import { BadRequestError, ConflictError, InternalServerError, NotFoundError, TimeoutError } from "../utils/error";
 
-export const errorHandler: ErrorRequestHandler=(error:Error,req: Request, res: Response, next: NextFunction)=> {
+export const errorHandler=(error:Error,req: Request, res: Response, next: NextFunction)=> {
     if(error instanceof BadRequestError) {
         return res.status(error.statusCode).json({ errors: error.serializeErrors() });
     }
