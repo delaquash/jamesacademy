@@ -13,8 +13,28 @@ export const UserLogin = async (req: Request, res: Response, next: NextFunction)
                     email: data.email
                 }
             })
+            if(isUserExist) {
+
+            } else {
+                const user = await prisma.user.create({
+                    data: {
+                        email: data.email,
+                        name: data.name,
+                        avatar: data.avatar
+                    }
+                })
+            }
+        } else {
+            res.status(404).json({ 
+                success: false,
+                message: "Your request is not authorized" })
         }
     } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
         
     }
 }

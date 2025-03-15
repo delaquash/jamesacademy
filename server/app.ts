@@ -42,9 +42,3 @@ const errorHandler = (
 };
 
 // app.use(errorHandler)
-
-
-// start server
-server.listen(process.env.PORT, () =>{ 
-    console.log(`Server is running on port ${process.env.PORT}`)
-});
