@@ -1,2 +1,3 @@
-import express from "express";
-import dotenv from "dotenv";
+require("dotenv").config();
+import express, { Request, Response, NextFunction } from "express";
+export const app = express();
