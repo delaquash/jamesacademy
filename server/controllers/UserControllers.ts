@@ -8,6 +8,7 @@ export const UserLogin = async (req: Request, res: Response, next: NextFunction)
     try {
         const { signedToken} = req.body;
         const data = jwt.verify(signedToken, process.env.JWT_SECRET!) as jwt.JwtPayload;
+        console.log(process.env.JWT_SECRET)
         if(data) {
             const isUserExist = await prisma.user.findUnique({
                 where: {

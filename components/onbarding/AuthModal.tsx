@@ -5,6 +5,7 @@ import { fontSizes, windowHeight, windowWidth } from "@/themes/app.constant";
 import { Image } from "react-native";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import JWT from "expo-jwt";
+import axios from "axios";
 
 interface AuthHandlerProps {
   name: string;
@@ -37,6 +38,8 @@ const AuthModal = () => {
       }
 
       const token = JWT.encode({...user}, process.env.EXPO_PUBLIC_JWT_SECRET!);
+
+      await axios.post``
     }
 
     const googleSignIn = async() => {
