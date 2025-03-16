@@ -2,6 +2,7 @@ require("dotenv").config();
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import prisma from "../utils/prisma";
+import { sendToken } from "../utils/sendToken";
 
 export const UserLogin = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -14,7 +15,7 @@ export const UserLogin = async (req: Request, res: Response, next: NextFunction)
                 }
             })
             if(isUserExist) {
-
+                await sendToken(isUserExist, res)
             } else {
                 const user = await prisma.user.create({
                     data: {
@@ -23,6 +24,7 @@ export const UserLogin = async (req: Request, res: Response, next: NextFunction)
                         avatar: data.avatar
                     }
                 })
+                await sendToken(user, res)
             }
         } else {
             res.status(404).json({ 
