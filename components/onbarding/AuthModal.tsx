@@ -39,7 +39,7 @@ const AuthModal = () => {
 
       const token = JWT.encode({...user}, process.env.EXPO_PUBLIC_JWT_SECRET!);
 
-      await axios.post``
+      // await axios.post``
     }
 
     const googleSignIn = async() => {
