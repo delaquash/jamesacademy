@@ -4,7 +4,7 @@ import { NextFunction, Request, Response } from "express";
 declare module "express" {
   interface Request {
     user: any;
-    JWTPayload: any;
+    id: any
   }
 }
 
