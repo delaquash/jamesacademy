@@ -17,13 +17,17 @@ interface JWTPayload {
 
 export const isAuthenticated = async (req: Request, res:Response, next: NextFunction) => {
   try {
+    if (!process.env.JWT_ACCESS_TOKEN_SECRET) {
+      throw new Error('JWT_ACCESS_TOKEN_SECRET is not defined');
+    }
+    
     const accessToken = req.headers["authorization"];
 
     if (accessToken && accessToken.startsWith("Bearer ")) {
       const token = accessToken.slice(7, accessToken.length);
 
       // verify the token
-      const userData = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET!);
+      const userData = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET!) as JWTPayload;
 
       // fetching user data
       const user = await prisma.user.findUnique({
