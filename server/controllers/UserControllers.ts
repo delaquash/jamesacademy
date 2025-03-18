@@ -13,7 +13,7 @@ export const UserLogin = async (req: Request, res: Response, next: NextFunction)
         console.log("Request Body:", req.body);
         const { signedToken} = req.body;
         if (!signedToken) {
-            res.status(400).json({ success: false, message: "JWT must be provided" });
+           res.status(400).json({ success: false, message: "JWT must be provided..." });
        }
         const data = jwt.verify(signedToken, process.env.JWT_SECRET!) as jwt.JwtPayload;
        

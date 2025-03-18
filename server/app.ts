@@ -5,7 +5,6 @@ import userRoutes from "./route/UserRoute";
 // import { errorHandler } from "./middleware/errorHandler";
 import { CustomError } from "./utils/CustomError";
 
-
 export const app = express();
 const server = require("http").createServer(app);
 
@@ -16,12 +15,12 @@ app.use("/api/v1/user", userRoutes);
 // app.use("/api/v1/driver", driverRoutes);
 
 // testing route
-app.get("/test", (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).json({
-        success: true,
-        message: "Server is working!",
-    });
-});
+// app.get("/test", (req: Request, res: Response, next: NextFunction) => {
+//     res.status(200).json({
+//         success: true,
+//         message: "Server is working!",
+//     });
+// });
 
 
 const errorHandler = (

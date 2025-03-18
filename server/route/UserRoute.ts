@@ -1,9 +1,10 @@
 import express from "express";
 import { UserLogin } from "../controllers/UserControllers";
+import { isAuthenticated } from "../middleware/auth";
 
 const router = express.Router();
 
-router.post("/login", UserLogin);
+router.post("/login", isAuthenticated, UserLogin);
 // router.post("/verifyOtp", verifyOtp);
 // router.put("/signup", signUpNewUser)
 // router.post("/email-otp-request", sendOtpToMail)

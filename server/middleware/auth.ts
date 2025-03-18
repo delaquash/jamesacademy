@@ -1,11 +1,13 @@
 import jwt from "jsonwebtoken";
-import prisma from "../utils/prisma.js";
+import prisma from "../utils/prisma";
 import { NextFunction, Request, Response } from "express";
-declare module "express" {
-  interface Request {
-    user: any;
-    id: any
-  }
+declare global {
+    namespace Express {
+        interface Request {
+            user: any;
+            id: any
+        }
+    }
 }
 
 interface JWTPayload {
@@ -17,7 +19,9 @@ interface JWTPayload {
 
 export const isAuthenticated = async (req: Request, res:Response, next: NextFunction) => {
   try {
-    if (!process.env.JWT_ACCESS_TOKEN_SECRET) {
+
+    const jwtSecret = process.env.JWT_ACCESS_TOKEN_SECRET || process.env.JWT_SECRET;
+    if (!jwtSecret) {
       throw new Error('JWT_ACCESS_TOKEN_SECRET is not defined');
     }
     
