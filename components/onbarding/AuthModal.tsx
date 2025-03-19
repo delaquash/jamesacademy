@@ -14,48 +14,48 @@ interface AuthHandlerProps {
 }
 
 const AuthModal = () => {
-    const configureGoogleSignIn = () => {
-        if(Platform.OS === "ios"){
-            GoogleSignin.configure({
-                iosClientId: process.env.EXPO_PUBLIC_IOS_GOOGLE_API_KEY,
-            })
-        } else {
-          GoogleSignin.configure({ 
-              webClientId: process.env.EXPO_PUBLIC_ANDROID_GOOGLE_API_KEY,
-          })
-        }
-    }
+    // const configureGoogleSignIn = () => {
+    //     if(Platform.OS === "ios"){
+    //         GoogleSignin.configure({
+    //             iosClientId: process.env.EXPO_PUBLIC_IOS_GOOGLE_API_KEY,
+    //         })
+    //     } else {
+    //       GoogleSignin.configure({ 
+    //           webClientId: process.env.EXPO_PUBLIC_ANDROID_GOOGLE_API_KEY,
+    //       })
+    //     }
+    // }
 
-    useEffect(()=> {
-      configureGoogleSignIn();
-    }, [])
+    // useEffect(()=> {
+    //   configureGoogleSignIn();
+    // }, [])
 
-    const authHandler = async({ name, email, avatar}:AuthHandlerProps) => {
-      const user = {
-        name,
-        email,
-        avatar,
-      }
+    // const authHandler = async({ name, email, avatar}:AuthHandlerProps) => {
+    //   const user = {
+    //     name,
+    //     email,
+    //     avatar,
+    //   }
 
-      const token = JWT.encode({...user}, process.env.EXPO_PUBLIC_JWT_SECRET!);
+    //   const token = JWT.encode({...user}, process.env.EXPO_PUBLIC_JWT_SECRET!);
 
-      // await axios.post``
-    }
+    //   // await axios.post``
+    // }
 
-    const googleSignIn = async() => {
-      try {
-        await GoogleSignin.hasPlayServices();
-        const userInfo = await GoogleSignin.signIn();
-        console.log(userInfo)
-        await authHandler({
-          name: userInfo.data?.user.name!,
-          email: userInfo.data?.user.email!,
-          avatar: userInfo.data?.user.photo!,
-        })
-      } catch (error) {
-        console.log(error)
-      }
-    }
+    // const googleSignIn = async() => {
+    //   try {
+    //     await GoogleSignin.hasPlayServices();
+    //     const userInfo = await GoogleSignin.signIn();
+    //     console.log(userInfo)
+    //     await authHandler({
+    //       name: userInfo.data?.user.name!,
+    //       email: userInfo.data?.user.email!,
+    //       avatar: userInfo.data?.user.photo!,
+    //     })
+    //   } catch (error) {
+    //     console.log(error)
+    //   }
+    // }
 
    
   return (
