@@ -8,6 +8,7 @@ import JWT from "expo-jwt";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 import { router } from "expo-router";
+import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 
 interface AuthHandlerProps {
   name?: string;
@@ -74,7 +75,15 @@ const AuthModal = ({ setModalVisible }: AuthHandlerProps) => {
       revocationEndpoint:`https://github.com/settings/connections/applications/${process.env.EXPO_PUBLIC_GITHUB_CLIENT_ID}`,
     }
 
-   
+    const [request, response] = useAuthRequest({
+      clientId: process.env.EXPO_PUBLIC_GITHUB_CLIENT_ID!,
+      clientSecret: process.env.EXPO_PUBLIC_GITHUB_CLIENT_SECRET!,
+      scopes: ["identity"],
+      redirectUri: makeRedirectUri({
+        scheme: "myapp"
+      })
+      
+    },githubAuthEndpoints)
   return (
     <BlurView
       style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
