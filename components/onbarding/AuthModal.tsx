@@ -78,6 +78,20 @@ const AuthModal = ({ setModalVisible }: { setModalVisible: (modal: boolean) => v
       }
     },[])
 
+    const handleGithubLogin = async() => {
+      const result = await WebBrowser.openAuthSessionAsync(
+        request?.url!,
+        makeRedirectUri({
+          scheme: "myapp"
+        })
+      )
+      if(result.type === "success"){
+        const urlParams = new URLSearchParams(result.url.split("?")[1]);
+        const code:any = urlParams.get("code");
+        fetchAccessToken(code)
+      }
+    }
+
     const fetchAccessToken = async(code: string) => {
       const tokenResponse = await fetch(githubAuthEndpoints.tokenUrl, {
         method: "POST",
