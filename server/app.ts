@@ -1,4 +1,5 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 import express, { Request, Response, NextFunction } from "express";
 
 import userRoutes from "./route/UserRoute";
@@ -40,4 +41,8 @@ const errorHandler = (
     });
 };
 
+
+
 // app.use(errorHandler)
+
+
