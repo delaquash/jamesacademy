@@ -5,7 +5,9 @@ import { fontSizes, windowHeight, windowWidth } from "@/themes/app.constant";
 import { Image } from "react-native";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import JWT from "expo-jwt";
+import * as SecureStore from "expo-secure-store";
 import axios from "axios";
+import { router } from "expo-router";
 
 interface AuthHandlerProps {
   name: string;
@@ -39,7 +41,12 @@ const AuthModal = () => {
 
     //   const token = JWT.encode({...user}, process.env.EXPO_PUBLIC_JWT_SECRET!);
 
-    //   // await axios.post``
+    // const res =  await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/auth/login`, {
+    //   signedToken: token
+    // })
+    // await  SecureStore.setItemAsync("accessToken", res.data.accessToken);
+    // router.push("/(tabs)")
+    
     // }
 
     // const googleSignIn = async() => {

@@ -1,4 +1,9 @@
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+
 import { Response } from "express";
 export const sendToken= async(user: any, res: Response) => {
     const accessToken = jwt.sign(
