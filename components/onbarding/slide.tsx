@@ -121,7 +121,9 @@ const Slide = ({ slide, index, setIndex, totalSlides }: SlideProps) => {
             style={{ flex:1 }}
             onPress={()=> setModalVisible(false)}
           >
-            <AuthModal />
+            <AuthModal 
+              setModalVisible={setModalVisible}
+            />
           </Pressable>
 
 

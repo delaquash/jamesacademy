@@ -10,12 +10,14 @@ import axios from "axios";
 import { router } from "expo-router";
 
 interface AuthHandlerProps {
-  name: string;
-  email: string;
-  avatar: string;
+  name?: string;
+  email?: string;
+  avatar?: string;
+  setModalVisible?: (modal: boolean) => void;
 }
 
-const AuthModal = () => {
+
+const AuthModal = ({ setModalVisible }: AuthHandlerProps) => {
     // const configureGoogleSignIn = () => {
     //     if(Platform.OS === "ios"){
     //         GoogleSignin.configure({
@@ -45,6 +47,8 @@ const AuthModal = () => {
     //   signedToken: token
     // })
     // await  SecureStore.setItemAsync("accessToken", res.data.accessToken);
+    // This is to close the modal after successful login
+    // setModalVisible!(false)
     // router.push("/(tabs)")
     
     // }
@@ -63,6 +67,12 @@ const AuthModal = () => {
     //     console.log(error)
     //   }
     // }
+
+    const githubAuthEndpoints = {
+      authorizationUrl : "https://github.com/login/oauth/authorize",
+      tokenUrl: "https://github.com/login/oauth/access_token",
+      revocationEndpoint:`https://github.com/settings/connections/applications/${process.env.EXPO_PUBLIC_GITHUB_CLIENT_ID}`,
+    }
 
    
   return (
