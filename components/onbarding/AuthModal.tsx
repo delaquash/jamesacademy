@@ -8,17 +8,18 @@ import JWT from "expo-jwt";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 import { router } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 
 interface AuthHandlerProps {
   name?: string;
   email?: string;
   avatar?: string;
-  setModalVisible?: (modal: boolean) => void;
+  // setModalVisible?: (modal: boolean) => void;
 }
 
 
-const AuthModal = ({ setModalVisible }: AuthHandlerProps) => {
+const AuthModal = ({ setModalVisible }: { setModalVisible: (modal: boolean) => void}) => {
     // const configureGoogleSignIn = () => {
     //     if(Platform.OS === "ios"){
     //         GoogleSignin.configure({
@@ -35,22 +36,7 @@ const AuthModal = ({ setModalVisible }: AuthHandlerProps) => {
     //   configureGoogleSignIn();
     // }, [])
 
-    // const authHandler = async({ name, email, avatar}:AuthHandlerProps) => {
-    //   const user = {
-    //     name,
-    //     email,
-    //     avatar,
-    //   }
-
-    //   const token = JWT.encode({...user}, process.env.EXPO_PUBLIC_JWT_SECRET!);
-
-    // const res =  await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/auth/login`, {
-    //   signedToken: token
-    // })
-    // await  SecureStore.setItemAsync("accessToken", res.data.accessToken);
-    // This is to close the modal after successful login
-    // setModalVisible!(false)
-    // router.push("/(tabs)")
+ 
     
     // }
 
@@ -84,6 +70,62 @@ const AuthModal = ({ setModalVisible }: AuthHandlerProps) => {
       })
       
     },githubAuthEndpoints)
+
+    useEffect(()=> {
+      if(response?.type === "success"){
+        const { code } = response.params;
+        fetchAccessToken(code)
+      }
+    },[])
+
+    const fetchAccessToken = async(code: string) => {
+      const tokenResponse = await fetch(githubAuthEndpoints.tokenUrl, {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+       body: `client_id=${process.env.EXPO_PUBLIC_GITHUB_CLIENT_ID}&client_secret=${process.env.EXPO_PUBLIC_GITHUB_CLIENT_SECRET}&code=${code}`
+      })
+
+      const { access_token } = await tokenResponse.json();
+      fetchUserInfo(access_token)
+    }
+
+  const fetchUserInfo = async(token: string) => {
+    const userResponse = await fetch("https://api.github.com/user", {
+      headers: {
+        Authorization: `token ${token}`
+      }
+    })
+
+    const userData = await userResponse.json()
+    await authHandler({
+      name: userData.name!,
+      email: userData.email!,
+      avatar: userData.avatar_url!
+    })
+  }
+
+   // github auth handler end 
+  const authHandler = async({ name, email, avatar}:AuthHandlerProps) => {
+    const user = {
+      name,
+      email,
+      avatar,
+    }
+
+    const token = JWT.encode({...user}, process.env.EXPO_PUBLIC_JWT_SECRET!);
+
+    const res =  await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/auth/login`, {
+      signedToken: token
+    })
+    await  SecureStore.setItemAsync("accessToken", res.data.accessToken);
+    // This is to close the modal after successful login
+    setModalVisible(false)
+    router.push("/(tabs)")
+  }
+
   return (
     <BlurView
       style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
