@@ -55,90 +55,194 @@ const AuthModal = ({ setModalVisible }: { setModalVisible: (modal: boolean) => v
     //   }
     // }
 
-    const githubAuthEndpoints = {
-      authorizationUrl : "https://github.com/login/oauth/authorize",
-      tokenUrl: "https://github.com/login/oauth/access_token",
-      revocationEndpoint:`https://github.com/settings/connections/applications/${process.env.EXPO_PUBLIC_GITHUB_CLIENT_ID}`,
-    }
+  //   
+  
+  // GitHub auth configuration
+const githubAuthConfig = {
+  authorizationUrl: "https://github.com/login/oauth/authorize",
+  tokenUrl: "https://github.com/login/oauth/access_token",
+  revocationEndpoint: `https://github.com/settings/connections/applications/${process.env.EXPO_PUBLIC_GITHUB_CLIENT_ID}`,
+  clientId: process.env.EXPO_PUBLIC_GITHUB_CLIENT_ID,
+  clientSecret: process.env.EXPO_PUBLIC_GITHUB_CLIENT_SECRET,
+  redirectUri:  "myapp://",
+  scopes: ["identity", "user:email"] // Added email scope
+};
 
-    const [request, response] = useAuthRequest({
-      clientId: process.env.EXPO_PUBLIC_GITHUB_CLIENT_ID!,
-      clientSecret: process.env.EXPO_PUBLIC_GITHUB_CLIENT_SECRET!,
-      scopes: ["identity"],
-      redirectUri: makeRedirectUri({
-        scheme: "myapp"
-      })
+// Validate required env variables
+useEffect(() => {
+  if (!githubAuthConfig.clientId || !githubAuthConfig.clientSecret) {
+    console.error("Missing GitHub OAuth credentials in environment variables");
+  }
+}, []);
+
+const handleGithubLogin = async() => {
+  try {
+    // Create the authorization URL with required parameters
+    const queryParams = new URLSearchParams({
+      client_id: githubAuthConfig.clientId || '',
+      redirect_uri: "myapp://",
+      scope: githubAuthConfig.scopes.join(" "),
+      state: generateRandomString(16), // Add state parameter for security
+    }).toString();
+    
+    const authUrl = `${githubAuthConfig.authorizationUrl}?${queryParams}`;
+    
+    // Open browser for authentication
+    const result = await WebBrowser.openAuthSessionAsync(authUrl, githubAuthConfig.redirectUri);
+    
+    // Always dismiss the browser session
+    WebBrowser.dismissAuthSession();
+    
+    if (result.type === "success") {
+      const urlParams = new URLSearchParams(result.url.split("?")[1]);
+      const code = urlParams.get("code");
       
-    },githubAuthEndpoints)
-
-    useEffect(()=> {
-      if(response?.type === "success"){
-        const { code } = response.params;
-        fetchAccessToken(code)
+      if (code) {
+        await fetchAccessToken(code);
+      } else {
+        console.error("No code received from GitHub");
       }
-    },[])
-
-    const handleGithubLogin = async() => {
-      const result = await WebBrowser.openAuthSessionAsync(
-        request?.url!,
-        makeRedirectUri({
-          scheme: "myapp"
-        })
-      )
-      if(result.type === "success"){
-        const urlParams = new URLSearchParams(result.url.split("?")[1]);
-        const code:any = urlParams.get("code");
-        fetchAccessToken(code)
-      }
+    } else {
+      console.log("Authentication canceled or failed", result);
     }
+  } catch (error) {
+    console.error("GitHub login error:", error);
+  }
+};
 
-    const fetchAccessToken = async(code: string) => {
-      const tokenResponse = await fetch(githubAuthEndpoints.tokenUrl, {
-        method: "POST",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-       body: `client_id=${process.env.EXPO_PUBLIC_GITHUB_CLIENT_ID}&client_secret=${process.env.EXPO_PUBLIC_GITHUB_CLIENT_SECRET}&code=${code}`
-      })
+interface TokenResponse {
+  access_token?: string;
+  error?: string;
+  error_description?: string;
+}
 
-      const { access_token } = await tokenResponse.json();
-      fetchUserInfo(access_token)
+interface TokenRequestBody {
+  client_id: string;
+  client_secret: string;
+  code: string;
+  redirect_uri: string;
+}
+
+const fetchAccessToken = async(code: string): Promise<void> => {
+  try {
+    const tokenResponse = await fetch(githubAuthConfig.tokenUrl, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams({
+        client_id: githubAuthConfig.clientId || '',
+        client_secret: githubAuthConfig.clientSecret || '',
+        code: code.toString(),
+        redirect_uri:"myapp://", //`${githubAuthConfig.redirectUri}`,
+      } satisfies TokenRequestBody).toString()
+    });
+    
+    const data: TokenResponse = await tokenResponse.json();
+    
+    if (data.error) {
+      throw new Error(data.error_description || data.error);
     }
+    
+    if (data.access_token) {
+      await fetchUserInfo(data.access_token);
+    } else {
+      throw new Error("No access token received");
+    }
+  } catch (error) {
+    console.error("Error fetching access token:", error);
+  }
+};
 
-  const fetchUserInfo = async(token: string) => {
+const fetchUserInfo = async(token: any) => {
+  try {
+    // Get user profile
     const userResponse = await fetch("https://api.github.com/user", {
       headers: {
         Authorization: `token ${token}`
       }
-    })
-
-    const userData = await userResponse.json()
-    await authHandler({
-      name: userData.name!,
-      email: userData.email!,
-      avatar: userData.avatar_url!
-    })
-  }
-
-   // github auth handler end 
-  const authHandler = async({ name, email, avatar}:AuthHandlerProps) => {
-    const user = {
-      name,
-      email,
-      avatar,
+    });
+    
+    if (!userResponse.ok) {
+      throw new Error(`GitHub API error: ${userResponse.status}`);
     }
-
-    const token = JWT.encode({...user}, process.env.EXPO_PUBLIC_JWT_SECRET!);
-
-    const res =  await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/auth/login`, {
-      signedToken: token
-    })
-    await  SecureStore.setItemAsync("accessToken", res.data.accessToken);
-    // This is to close the modal after successful login
-    setModalVisible(false)
-    router.push("/(tabs)")
+    
+    const userData = await userResponse.json();
+    
+    // Get user email if it's not in the profile
+    let email = userData.email;
+    if (!email) {
+      const emailResponse = await fetch("https://api.github.com/user/emails", {
+        headers: {
+          Authorization: `token ${token}`
+        }
+      });
+      
+      if (emailResponse.ok) {
+        const emails = await emailResponse.json();
+        interface GithubEmail {
+          email: string;
+          primary: boolean;
+          verified: boolean;
+          visibility: string | null;
+        }
+        const primaryEmail: GithubEmail | undefined = emails.find((e: GithubEmail) => e.primary) || emails[0];
+        email = primaryEmail ? primaryEmail.email : null;
+      }
+    }
+    
+    if (!email) {
+      throw new Error("Could not retrieve user email");
+    }
+    
+    await authHandler({
+      name: userData.name || userData.login,
+      email: email,
+      avatar: userData.avatar_url || ""
+    });
+  } catch (error) {
+    console.error("Error fetching user info:", error);
   }
+};
+
+const authHandler = async({ name, email, avatar }: AuthHandlerProps) => {
+  try {
+    const user = { name, email, avatar };
+    
+    // Add expiration to JWT
+    const payload = {
+      ...user,
+      exp: Math.floor(Date.now() / 1000) + (60 * 60) // 1 hour expiration
+    };
+    
+    const token = JWT.encode(payload, process.env.EXPO_PUBLIC_JWT_SECRET!);
+    
+    const response = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/auth/login`, {
+      signedToken: token
+    });
+    
+    if (response.data && response.data.accessToken) {
+      await SecureStore.setItemAsync("accessToken", response.data.accessToken);
+      setModalVisible(false);
+      router.push("/(tabs)");
+    } else {
+      throw new Error("Invalid response from authentication server");
+    }
+  } catch (error) {
+    console.error("Authentication error:", error);
+  }
+};
+
+// Utility function to generate random state parameter
+const generateRandomString = (length: number) => {
+  const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    result += charset.charAt(Math.floor(Math.random() * charset.length));
+  }
+  return result;
+};
 
   return (
     <BlurView
@@ -207,7 +311,9 @@ const AuthModal = ({ setModalVisible }: { setModalVisible: (modal: boolean) => v
                 }}
               />
             </Pressable>
-            <Pressable>
+            <Pressable
+              onPress={()=> handleGithubLogin()}
+            >
               <Image
                 source={require("@/assets/images/onboarding/github.png")}
                 style={{
