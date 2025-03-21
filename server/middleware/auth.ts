@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import prisma from "../utils/prisma";
+import prisma from "../utils/prisma.js";
 import { NextFunction, Request, Response } from "express";
 declare global {
     namespace Express {

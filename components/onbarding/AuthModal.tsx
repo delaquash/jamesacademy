@@ -217,11 +217,13 @@ const authHandler = async({ name, email, avatar }: AuthHandlerProps) => {
     
     // Add timeout to axios request
     const response = await axios.post(
-      `${process.env.EXPO_PUBLIC_API_URL}/api/v1/user/login`, 
+      "http://localhost:7000/api/v1/user/login", 
       { signedToken: token },
       { timeout: 10000 } // 10 second timeout
+      
+
     );
-    
+    console.log("This is response from the backend",response.data);
     // Rest of the code...
   } catch (error: any) {
     console.error("Authentication error details:", error.message);
@@ -252,8 +254,6 @@ const generateRandomString = (length: number) => {
   return result;
 };
 
-
- 
 
   return (
     <BlurView

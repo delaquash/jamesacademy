@@ -1,8 +1,9 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config()
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import prisma from "../utils/prisma";
-import { sendToken } from "../utils/sendToken";
+import prisma from "../utils/prisma.js";
+import { sendToken } from "../utils/sendToken.js";
 
 
 console.log("JWT_SECRET:", process.env.JWT_SECRET);
