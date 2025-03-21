@@ -12,11 +12,15 @@ console.log("JWT_SECRET:", process.env.JWT_SECRET);
 export const UserLogin = async (req: Request, res: Response, next: NextFunction) : Promise<void>=> {
     try {
         console.log("Request Body:", req.body);
-        const { signedToken} = req.body;
+        const { signedToken } = req.body;
+        console.log("This is signed token",signedToken);
         if (!signedToken) {
            res.status(400).json({ success: false, message: "JWT must be provided..." });
        }
-        const data = jwt.verify(signedToken, process.env.JWT_SECRET!) as jwt.JwtPayload;
+        if (!process.env.JWT_SECRET) {
+            throw new Error('JWT_SECRET is not defined in environment variables');
+        }
+        const data = jwt.verify(signedToken, process.env.JWT_SECRET) as jwt.JwtPayload;
        
         console.log("Data:", data);
         
@@ -53,4 +57,29 @@ export const UserLogin = async (req: Request, res: Response, next: NextFunction)
         });
         
     }
+}
+
+// Add this to your routes file
+export const registerForToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  const testPayload = { 
+    name: "Test User", 
+    email: "test@example.com",
+    avatar: "https://example.com/avatar.jpg"
+  };
+  
+  // Make sure JWT_SECRET exists
+  if (!process.env.JWT_SECRET) {
+     res.status(500).json({ 
+      success: false, 
+      message: "JWT_SECRET is not defined in environment variables" 
+    });
+  }
+  
+  const token =  jwt.sign(testPayload, process.env.JWT_SECRET!);
+  
+  res.json({ 
+    success: true, 
+    token,
+    payload: testPayload
+  });
 }

@@ -16,7 +16,7 @@ app.use("/api/v1/user", userRoutes);
 // app.use("/api/v1/driver", driverRoutes);
 
 // testing route
-app.get("/test", (req: Request, res: Response, next: NextFunction) => {
+app.get("/api/v1/test", (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json({
         success: true,
         message: "Server is working!",
