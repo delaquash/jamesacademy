@@ -6,6 +6,7 @@ import { Image } from "react-native";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import JWT from "expo-jwt";
 import * as SecureStore from "expo-secure-store";
+import jwt from "jwt-encode"; 
 import axios from "axios";
 import { router } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
@@ -213,7 +214,7 @@ const authHandler = async({ name, email, avatar }: AuthHandlerProps) => {
       exp: Math.floor(Date.now() / 1000) + (60 * 60)
     };
     
-    const token = JWT.encode(payload, process.env.EXPO_PUBLIC_JWT_SECRET!);
+    const token = jwt(payload, process.env.EXPO_PUBLIC_JWT_SECRET!);
     
     // Add timeout to axios request
     const response = await axios.post(

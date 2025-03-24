@@ -14,9 +14,9 @@ export const UserLogin = async (req: Request, res: Response, next: NextFunction)
         console.log("Request Body:", req.body);
         const { signedToken } = req.body;
         console.log("This is signed token",signedToken);
-        if (!signedToken) {
-           res.status(400).json({ success: false, message: "JWT must be provided..." });
-       }
+    //     if (!signedToken) {
+    //        res.status(400).json({ success: false, message: "JWT must be provided..." });
+    //    }
         if (!process.env.JWT_SECRET) {
             throw new Error('JWT_SECRET is not defined in environment variables');
         }
