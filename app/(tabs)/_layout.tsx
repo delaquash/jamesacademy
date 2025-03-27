@@ -1,7 +1,8 @@
 import { useTheme } from "@/context/ThemeContext";
 import { fetchUser } from "@/hooks/fetch/fetchUserHook";
 import { fontSizes, IsIPAD } from "@/themes/app.constant";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import { Feather, Ionicons, Octicons } from "@expo/vector-icons";
+import { BlurView } from "expo-blur";
 import { Tabs } from "expo-router";
 import React from "react";
 import { moderateScale, scale } from "react-native-size-matters";
@@ -42,6 +43,15 @@ export default function _layout () {
                   color={color}
                 />
               )
+            } else if (route.name === "profile/index") {
+              iconName = (
+                <Octicons
+                  name="person"
+                  size={moderateScale(26)}
+                  style={{ width: IsIPAD ? scale(20) : "auto" }}
+                  color={color}
+                />
+              );
             }
             return iconName
           },
@@ -57,11 +67,28 @@ export default function _layout () {
             fontSize: fontSizes.FONT22
           },
           headerBackgroundContainerStyle: {
-            backgroundColor: theme.dark ? "#131313" : "#fff",
-            shadowColor: theme.dark ? "#fff" : "000"
-          }
+            backgroundColor: theme.dark ? "#131313" : "#FFF",
+            shadowColor: theme.dark ? "#FFF" : "000",
+            shadowOpacity: theme.dark ? 0.1 : 0.1,
+            shadowRadius: 1,
+            shadowOffset: { width: 0, height: 1 },
+            elevation: 1
+          },
+          headerBackground: () =>(
+            <BlurView 
+              intensity={theme.dark ? 70 : 80}
+              style={{
+                borderTopLeftRadius: scale(20),
+                borderTopRightRadius: scale(20),
+                overflow: "hidden",
+                backgroundColor: "transparent"
+              }}
+            />
+          ),
+          tabBarShowLabel: false
         }
-      }}
+      }
+    }
     >
      <Tabs.Screen name="index" />
       <Tabs.Screen name="courses/index" />
