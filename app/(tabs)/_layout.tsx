@@ -1,11 +1,12 @@
 import { useTheme } from "@/context/ThemeContext";
 import { fetchUser } from "@/hooks/fetch/fetchUserHook";
-import { fontSizes, IsIPAD } from "@/themes/app.constant";
+import { fontSizes, IsAndroid, IsIOS, IsIPAD } from "@/themes/app.constant";
 import { Feather, Ionicons, Octicons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { Tabs } from "expo-router";
 import React from "react";
-import { moderateScale, scale } from "react-native-size-matters";
+import { StyleSheet, View } from "react-native";
+import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 
 export default function _layout () {
   const { theme} = useTheme();
@@ -85,10 +86,72 @@ export default function _layout () {
               }}
             />
           ),
-          tabBarShowLabel: false
-        }
-      }
-    }
+          tabBarShowLabel: false,
+          tabBarStyle: {
+            position: IsIOS ? (theme.dark ? "absolute" : "static") : "absolute",
+            borderTopLeftRadius: IsAndroid ? 0 : IsIPAD ? scale(20) : scale(35),
+            borderTopRightRadius: IsAndroid
+              ? 0
+              : IsIPAD
+              ? scale(20)
+              : scale(35),
+            borderTopWidth: 0,
+            height: verticalScale(55),
+            opacity: loader ? 0 : 1,
+            transition: "opacity 0.3s ease-in-out",
+          },
+          tabBarBackground: () => {
+            return (
+              <>
+                {IsIOS && !theme.dark ? (
+                  <View
+                    style={{
+                      ...StyleSheet.absoluteFillObject,
+                      backgroundColor: "#fff",
+                      borderTopLeftRadius: IsAndroid
+                        ? 0
+                        : IsIPAD
+                        ? scale(25)
+                        : scale(35),
+                      borderTopRightRadius: IsAndroid
+                        ? 0
+                        : IsIPAD
+                        ? scale(25)
+                        : scale(35),
+                      overflow: "hidden",
+                    }}
+                  />
+                ) : (
+                  <BlurView
+                    intensity={theme.dark ? (IsAndroid ? 10 : 60) : 100}
+                    style={{
+                      ...StyleSheet.absoluteFillObject,
+                      borderTopLeftRadius: IsAndroid
+                        ? 0
+                        : IsIPAD
+                        ? scale(25)
+                        : scale(35),
+                      borderTopRightRadius: IsAndroid
+                        ? 0
+                        : IsIPAD
+                        ? scale(25)
+                        : scale(35),
+                      overflow: "hidden",
+                      backgroundColor: IsAndroid
+                        ? theme.dark
+                          ? "#131313"
+                          : "#fff"
+                        : theme.dark
+                        ? "transparent"
+                        : "#fff",
+                    }}
+                  />
+                )}
+              </>
+            );
+          },
+        };
+      }}
     >
      <Tabs.Screen name="index" />
       <Tabs.Screen name="courses/index" />
