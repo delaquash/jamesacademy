@@ -56,7 +56,8 @@ export default function _layout () {
             width: scale(20),
             fontFamily: "Poppins_400Regular",
             fontSize: fontSizes.FONT22
-          }
+          },
+          headerBackgroundContainerStyle: {}
         }
       }}
     >
