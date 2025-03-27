@@ -73,17 +73,9 @@
 //   },
 // });
 
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import HomeScreen from "@/screen/Home/HomeScreen";
+import React from "react";
 
-const index = () => {
-  return (
-    <View>
-      <Text>index</Text>
-    </View>
-  )
+export default function Home() {
+  return <HomeScreen />;
 }
-
-export default index
-
-const styles = StyleSheet.create({})

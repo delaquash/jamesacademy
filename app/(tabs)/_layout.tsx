@@ -6,7 +6,6 @@ import { Tabs } from "expo-router";
 import React from "react";
 import { moderateScale, scale } from "react-native-size-matters";
 
-
 export default function _layout () {
   const { theme} = useTheme();
   const { loader } = fetchUser()
@@ -25,7 +24,7 @@ export default function _layout () {
                   style={{ width: IsIPAD ? scale(24) : "auto" }}
                 />
               );
-            } else if(route.name === "course/index"){
+            } else if(route.name === "courses/index"){
               iconName =  (
                 <Feather 
                   name="book-open"
@@ -34,7 +33,7 @@ export default function _layout () {
                   color={color}
                 />
               )
-            } else if(route.name === "resource/index"){
+            } else if(route.name === "resources/index"){
               iconName =  (
                 <Ionicons
                   name="document-text-outline"
@@ -57,11 +56,17 @@ export default function _layout () {
             fontFamily: "Poppins_400Regular",
             fontSize: fontSizes.FONT22
           },
-          headerBackgroundContainerStyle: {}
+          headerBackgroundContainerStyle: {
+            backgroundColor: theme.dark ? "#131313" : "#fff",
+            shadowColor: theme.dark ? "#fff" : "000"
+          }
         }
       }}
     >
-    
+     <Tabs.Screen name="index" />
+      <Tabs.Screen name="courses/index" />
+      <Tabs.Screen name="resources/index" />
+      <Tabs.Screen name="profile/index" />
     </Tabs>
   )
 }
