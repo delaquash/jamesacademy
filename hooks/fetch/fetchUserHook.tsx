@@ -11,7 +11,7 @@ export const setAuthorizationHeader = async () => {
 };
 
 // Custom hook to fetch user data
-export const fetchUserHook = () => {
+export const fetchUser = () => {
     const [user, setUser] = useState<UserType>(); // State to store user data
     const [loader, setLoader] = useState(false); // State to track loading state
     const [shouldRefetch, setShouldRefetch] = useState(false); // State to trigger refetching
