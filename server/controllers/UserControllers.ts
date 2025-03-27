@@ -59,6 +59,18 @@ export const UserLogin = async (req: Request, res: Response, next: NextFunction)
     }
 }
 
+export const getLoggedInUser = async (req: Request, res: Response, next: NextFunction) =>{
+    try {
+        const user = req.user;
+        res.status(201).json({
+            success: true,
+            user
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 // Add this to your routes file
 export const registerForToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const testPayload = { 
