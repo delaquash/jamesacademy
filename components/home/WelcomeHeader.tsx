@@ -1,11 +1,11 @@
-import { ActivityIndicator, Pressable, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Pressable, StatusBar, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import { useTheme } from '@/context/ThemeContext'
 import { useUserData } from '@/hooks/fetch/userData'
 import { LinearGradient } from 'expo-linear-gradient'
 import { fontSizes, IsAndroid, IsHaveNotch, IsIPAD, windowHeight, windowWidth } from '@/themes/app.constant'
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters'
-import { Ionicons } from '@expo/vector-icons'
+import { EvilIcons, Ionicons } from '@expo/vector-icons'
 
 
 const WelcomeHeader = () => {
@@ -88,6 +88,34 @@ const WelcomeHeader = () => {
                 </Pressable>
             </View>
         </View>
+        <View style={{ position: "relative" }}>
+        <TextInput
+          placeholder="Search for Topics,Courses"
+          style={[
+            styles.input,
+            {
+              backgroundColor: theme.dark ? "transparent" : "#fff",
+              borderWidth: theme.dark ? 1 : 0,
+              borderColor: theme.dark ? "#fff" : "",
+              color: theme?.dark ? "#fff" : "#000",
+            },
+          ]}
+          placeholderTextColor={theme.dark ? "#fff" : "#000"}
+        />
+        <Pressable
+          style={{
+            position: "absolute",
+            right: windowWidth(10),
+            top: windowHeight(16),
+          }}
+        >
+          <EvilIcons
+            name="search"
+            size={IsIPAD ? scale(20) : scale(30)}
+            color={theme.dark ? "#fff" : "blue"}
+          />
+        </Pressable>
+      </View>
     </LinearGradient>
   )
 }
