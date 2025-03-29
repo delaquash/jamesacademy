@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import HomeBanner from '@/components/home/HomeBanner'
 import { fontSizes, windowHeight, windowWidth } from '@/themes/app.constant'
 import { verticalScale } from 'react-native-size-matters'
+import GradientText from '@/components/common/GradientText'
 
 
 const HomeScreen = () => {
@@ -45,9 +46,9 @@ const HomeScreen = () => {
                 color: theme.dark ? "#fff" : "#000"
               }}
             >
-              Popular
+              Popular {"  "}
             </Text>
-            <GradiantText 
+            <GradientText 
               text="Courses"
               styles={{
                 fontSize: fontSizes.FONT35,
