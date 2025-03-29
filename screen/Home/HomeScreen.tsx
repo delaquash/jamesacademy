@@ -3,6 +3,10 @@ import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useTheme } from '@/context/ThemeContext'
 import WelcomeHeader from '@/components/home/WelcomeHeader'
+import { ScrollView } from 'react-native-gesture-handler'
+import HomeBanner from '@/components/home/HomeBanner'
+import { fontSizes, windowHeight, windowWidth } from '@/themes/app.constant'
+import { verticalScale } from 'react-native-size-matters'
 
 
 const HomeScreen = () => {
@@ -18,6 +22,41 @@ const HomeScreen = () => {
       }}
     >
       <WelcomeHeader />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+      >
+        <HomeBanner />
+        <View
+          style={{
+            marginHorizontal: windowWidth(20),
+            marginTop: verticalScale(-25)
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: windowHeight(5)
+            }}
+          >
+            <Text
+              style={{
+                fontSize: fontSizes.FONT35,
+                fontFamily: "Poppins_500Medium",
+                color: theme.dark ? "#fff" : "#000"
+              }}
+            >
+              Popular
+            </Text>
+            <GradiantText 
+              text="Courses"
+              styles={{
+                fontSize: fontSizes.FONT35,
+                fontFamily: "Poppins_500Medium"
+              }}
+            />
+          </View>
+        </View>
+      </ScrollView>
     </LinearGradient>
   )
 }

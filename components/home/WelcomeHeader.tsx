@@ -7,6 +7,7 @@ import { fontSizes, IsAndroid, IsHaveNotch, IsIPAD, windowHeight, windowWidth } 
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters'
 import { EvilIcons, Ionicons } from '@expo/vector-icons'
 
+// JTDBU4EE3B9141328
 
 const WelcomeHeader = () => {
     const {theme} = useTheme()
