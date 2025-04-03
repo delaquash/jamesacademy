@@ -8,6 +8,7 @@ import HomeBanner from '@/components/home/HomeBanner'
 import { fontSizes, windowHeight, windowWidth } from '@/themes/app.constant'
 import { scale, verticalScale } from 'react-native-size-matters'
 import GradientText from '@/components/common/GradientText'
+import SkeltonLoader from '@/utils/Skelton'
 
 
 const HomeScreen = () => {
@@ -76,6 +77,11 @@ const HomeScreen = () => {
                       </Text>
                   </View>
               </View>
+              {loading ? (
+                <>
+                  <SkeltonLoader />
+                </>
+              ) :( <View></View>)}
           </View>
       </ScrollView>
     </LinearGradient>
