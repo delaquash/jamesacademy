@@ -24,59 +24,57 @@ const HomeScreen = () => {
       }}
     >
       <WelcomeHeader />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView showsVerticalScrollIndicator={false}>
         <HomeBanner />
-        <View
-          style={{
-            marginHorizontal: windowWidth(20),
-            marginTop: verticalScale(-25)
-          }}
-        >
           <View
             style={{
-              flexDirection: "row",
-              marginTop: windowHeight(5)
+              marginHorizontal: windowWidth(20),
+              marginTop: verticalScale(-25)
             }}
           >
-            <Text
+            <View
               style={{
-                fontSize: fontSizes.FONT35,
-                fontFamily: "Poppins_500Medium",
-                color: theme.dark ? "#fff" : "#000"
+                flexDirection: "row",
+                marginTop: windowHeight(5)
               }}
             >
-              Popular {"  "}
-            </Text>
-            <GradientText 
-              text="Courses"
-              styles={{
-                fontSize: fontSizes.FONT35,
-                fontFamily: "Poppins_500Medium",
-                paddingLeft: scale(5)
-              }}
-            />
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <View
+                <Text
                   style={{
-                    backgroundColor: "#12BB70",
-                    width: windowWidth(15),
-                    height: windowWidth(15),
-                    borderRadius: 100,
+                    fontSize: fontSizes.FONT35,
+                    fontFamily: "Poppins_500Medium",
+                    color: theme.dark ? "#fff" : "#000"
+                  }}
+                >
+                  Popular {"  "}
+                </Text>
+                <GradientText 
+                  text="Courses"
+                  styles={{
+                    fontSize: fontSizes.FONT35,
+                    fontFamily: "Poppins_500Medium",
+                    paddingLeft: scale(5)
                   }}
                 />
-                    <Text
-                      style={{
-                        fontFamily: "Poppins_400Regular",
-                        fontSize: fontSizes.FONT18,
-                        paddingLeft: windowWidth(5),
-                        color: theme.dark ? "#fff" : "#000",
-                      }}
-                    >
-                        Our comprehensive project based courses
-                    </Text>
-                </View>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <View
+                    style={{
+                      backgroundColor: "#12BB70",
+                      width: windowWidth(15),
+                      height: windowWidth(15),
+                      borderRadius: 100,
+                    }}
+                  />
+                      <Text
+                        style={{
+                          fontFamily: "Poppins_400Regular",
+                          fontSize: fontSizes.FONT18,
+                          paddingLeft: windowWidth(5),
+                          color: theme.dark ? "#fff" : "#000",
+                        }}
+                      >
+                          Our comprehensive project based courses
+                      </Text>
+                  </View>
               </View>
           </View>
       </ScrollView>
