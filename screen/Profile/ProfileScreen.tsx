@@ -1,18 +1,55 @@
-import { StyleSheet, Text, View } from 'react-native'
+import {
+  Image,
+  Linking,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React from 'react'
 import { useUserData } from '@/hooks/fetch/userData'
 import { useTheme } from '@/context/ThemeContext'
 import { useFetchUser } from '@/hooks/fetch/fetchUserHook'
 import { fontSizes, IsAndroid, IsHaveNotch, IsIPAD } from '@/themes/app.constant'
 import { scale, verticalScale } from 'react-native-size-matters'
+import { LinearGradient } from "expo-linear-gradient";
 
 const ProfileScreen = () => {
   const { theme } = useTheme()
   const {user, loader } = useFetchUser();
   const { data } = useUserData()
   return (
-    <View>
-      <Text>ProfileScreen</Text>
+    <View
+    style={[
+      styles.container,
+      {
+        backgroundColor: theme.dark ? "#101010" : "#f5f5f5",
+      },
+    ]}
+  >
+    <LinearGradient
+      colors={
+        theme.dark
+          ? ["#121121", "#3c43485c", "#121121"]
+          : ["#6248FF", "#8673FC"]
+      }
+      start={theme.dark ? { x: 1, y: 1 } : { x: 0, y: 1 }}
+      end={theme.dark ? { x: 0, y: 1 } : { x: 0, y: 0 }}
+      style={styles.header}
+    >
+      <StatusBar barStyle={"light-content"} />
+      <SafeAreaView style={{ paddingTop: IsAndroid ? verticalScale(20) : 0 }}>
+        <View style={styles.headerContent}>
+          <Text style={styles.headerTitle}>Profile</Text>
+          <View>
+            <ThemeSwitcher />
+          </View>
+        </View>
+      </SafeAreaView>
+    </LinearGradient>
     </View>
   )
 }
@@ -20,7 +57,7 @@ const ProfileScreen = () => {
 export default ProfileScreen
 
 const styles = StyleSheet.create({
-  constainer: {
+  container: {
     flex: 1,
     backgroundColor: "#f5f5f5"
   },
