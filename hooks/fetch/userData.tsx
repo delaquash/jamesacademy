@@ -36,9 +36,9 @@ const fetchUserData = async (): Promise<UserData> => {
   const avatar = await SecureStore.getItemAsync('avatar');
 
   return {
-    name: name || '',
-    email: email || '',
-    avatar: avatar || ''
+    name: name ?? '',
+    email: email ?? '',
+    avatar: avatar ?? ''
   };
 };
 

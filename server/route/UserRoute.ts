@@ -6,7 +6,7 @@ const router: Router = express.Router();
 
 router.post("/login",  UserLogin);
 router.post("/register",  registerForToken);
-router.get("/me", isAuthenticated, getLoggedInUser)
+router.get("/user", isAuthenticated, getLoggedInUser)
 // router.put("/signup", signUpNewUser)
 // router.post("/email-otp-request", sendOtpToMail)
 // router.put("/email-otp-verify", verifyEmailOTP)

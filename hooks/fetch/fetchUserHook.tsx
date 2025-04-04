@@ -43,7 +43,7 @@ const fetchUserData = async ():Promise<IUser> => {
  */
 export const useFetchUser = () => {
   // useQuery: Fetches user data and caches it.
-  const { data: { name, email, avatar } = {}, isLoading, isError, refetch } = useQuery({
+  const { data: user, isLoading: loader, isError, refetch } = useQuery({
     queryKey: ["user"], // Unique key for caching
     queryFn: fetchUserData, // Function to fetch data
     retry: 2, // Number of retries on failure
@@ -58,11 +58,9 @@ export const useFetchUser = () => {
   });
 
   return {
-    name,
-    email,
-    avatar, // User data
+    user, // Fetched user data
     error, // Error from mutation
-    isLoading, // Loading state
+    loader, // Loading state
     isError, // Error state
     refetchUser, // Function to manually refetch user data
   };

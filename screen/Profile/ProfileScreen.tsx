@@ -6,8 +6,8 @@ import { useFetchUser } from '@/hooks/fetch/fetchUserHook'
 
 const ProfileScreen = () => {
   const { theme } = useTheme()
-  const {user, loader } = useUserData()
-  const { name, email, avatar} = useFetchUser()
+  const {user, loader } = useFetchUser();
+  const {n} = useUserData()
   return (
     <View>
       <Text>ProfileScreen</Text>
