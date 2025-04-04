@@ -51,6 +51,16 @@ const ProfileScreen = () => {
         </View>
       </SafeAreaView>
     </LinearGradient>
+    {/* Profile wrapper */}
+    <View style={[styles.profileWrapper, 
+      {backgroundColor: theme.dark ? "#121121" : "#fff",
+        shadowOpacity: theme.dark ? 0.12 : 0.25
+      }]}>
+        <Image 
+          style={styles.profileImage}
+          source={{ uri: }}
+        />
+    </View>
     </View>
   )
 }
