@@ -1,67 +1,69 @@
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
-import { useCallback, useEffect, useState } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
-// Function to set the Authorization header for Axios requests
-export const setAuthorizationHeader = async () => {
-    const token = await SecureStore.getItemAsync("token"); // Retrieve the stored token
-    if (token) {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`; // Set default header for axios
-    }
+interface IUser {
+  name: string;
+  email: string;
+  avatar: string;
+}
+
+/**
+ * Function to set the Authorization header for Axios requests.
+ * Ensures every request includes the stored token.
+ */
+const setAuthorizationHeader = async () => {
+  const token = await SecureStore.getItemAsync("token"); // Retrieve token from SecureStore
+  if (token) {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`; // Set default Authorization header
+  }
 };
 
-// Custom hook to fetch user data
-export const fetchUser = () => {
-    const [user, setUser] = useState<UserType>(); // State to store user data
-    const [loader, setLoader] = useState(false); // State to track loading state
-    const [shouldRefetch, setShouldRefetch] = useState(false); // State to trigger refetching
+/**
+ * Function to fetch user data from API.
+ * - Ensures Authorization header is set before making the request.
+ * - Fetches user data from the backend.
+ * - Stores user data securely in SecureStore.
+ */
+const fetchUserData = async ():Promise<IUser> => {
+  await setAuthorizationHeader(); // Ensure Authorization header is set
 
-    // Function to fetch user data
-    const fetchUserData = useCallback(async () => {
-        setLoader(true); // Set loading to true before fetching data
-        try {
-            await setAuthorizationHeader(); // Ensure Authorization header is set before making API call
-            const res = await axios.get(`${process.env.EXPO_BASE_URL}/user`); // API request to fetch user data
-            
-            // Store user data securely in SecureStore
-            await SecureStore.setItemAsync("name", res.data.name);
-            await SecureStore.setItemAsync("email", res.data.email);
-            await SecureStore.setItemAsync("avatar", res.data.avatar);
-            
-            setUser(res.data.user); // Update state with fetched user data
-        } catch (error) {
-            console.log("Error:", error); // Log errors if request fails
-        } finally {
-            setLoader(false); // Set loading to false after fetching data
-        }
-    }, []); 
-    /**
-     * useCallback is used to **memoize** the `fetchUserData` function.
-     * - This prevents the function from being recreated on every re-render.
-     * - The empty dependency array `[]` means that `fetchUserData` is created only once when the component mounts.
-     * - If dependencies were added (e.g., `[someDependency]`), the function would be re-created only when those dependencies change.
-     */
+  const res = await axios.get(`${process.env.EXPO_BASE_URL}/user`); // Fetch user data from API
 
-    useEffect(() => {
-        fetchUserData(); // Fetch user data when the component mounts
-        return () => setShouldRefetch(false); // Cleanup function to reset `shouldRefetch`
-    }, [shouldRefetch, fetchUserData]); 
-    /**
-     * The effect runs when `shouldRefetch` or `fetchUserData` changes.
-     * - When `shouldRefetch` is set to `true`, the effect will trigger `fetchUserData` again.
-     * - `fetchUserData` is already memoized using `useCallback`, preventing unnecessary re-renders.
-     */
+  // Store user data securely in SecureStore
+  await SecureStore.setItemAsync("name", res.data.user?.name);
+  await SecureStore.setItemAsync("email", res.data.user?.email);
+  await SecureStore.setItemAsync("avatar", res.data.user?.avatar);
 
-    // Function to trigger refetch
-    const refetch = () => {
-        setShouldRefetch(true); // Set `shouldRefetch` to `true`, triggering `useEffect` to fetch data again
-    };
-
-    return {
-        user, // User data
-        loader, // Loading state
-        refetch, // Function to manually trigger data refetch
-    };
+  return res.data.user; // Return fetched user data
 };
 
-// export default fetchUserHook;
+/**
+ * Custom hook to fetch and manage user data using React Query.
+ */
+export const useFetchUser = () => {
+  // useQuery: Fetches user data and caches it.
+  const { data: { name, email, avatar } = {}, isLoading, isError, refetch } = useQuery({
+    queryKey: ["user"], // Unique key for caching
+    queryFn: fetchUserData, // Function to fetch data
+    retry: 2, // Number of retries on failure
+  });
+
+  // useMutation: Allows manual refetching of user data.
+  const { mutate: refetchUser, error } = useMutation({
+    mutationFn: fetchUserData, // Function to refetch data
+    onSuccess: () => {
+      refetch(); // Manually refetch user data after mutation
+    },
+  });
+
+  return {
+    name,
+    email,
+    avatar, // User data
+    error, // Error from mutation
+    isLoading, // Loading state
+    isError, // Error state
+    refetchUser, // Function to manually refetch user data
+  };
+};
