@@ -16,6 +16,7 @@ import { useFetchUser } from '@/hooks/fetch/fetchUserHook'
 import { fontSizes, IsAndroid, IsHaveNotch, IsIPAD } from '@/themes/app.constant'
 import { scale, verticalScale } from 'react-native-size-matters'
 import { LinearGradient } from "expo-linear-gradient";
+import ThemeSwitcher from "@/components/common/ThemeSwitcher";
 
 const ProfileScreen = () => {
   const { theme } = useTheme()
