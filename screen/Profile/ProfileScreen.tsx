@@ -7,7 +7,7 @@ import { useFetchUser } from '@/hooks/fetch/fetchUserHook'
 const ProfileScreen = () => {
   const { theme } = useTheme()
   const {user, loader } = useFetchUser();
-  const {n} = useUserData()
+  const { data } = useUserData()
   return (
     <View>
       <Text>ProfileScreen</Text>
@@ -17,4 +17,10 @@ const ProfileScreen = () => {
 
 export default ProfileScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  constainer: {
+    flex: 1,
+    backgroundColor: "#f5f5f5"
+  }
+  
+})
