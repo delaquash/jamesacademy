@@ -33,7 +33,9 @@ const fetchUserData = async (): Promise<UserType> => {
   return {
     name: name ?? '',
     email: email ?? '',
-    avatar: avatar ?? ''
+    avatar: avatar ?? '',
+    orders: [],
+    reviews: [],
   };
 };
 

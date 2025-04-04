@@ -25,7 +25,7 @@ import ThemeSwitcher from "@/components/common/ThemeSwitcher";
 
 const ProfileScreen = () => {
   const { theme } = useTheme();
-  const { user, loader } = useFetchUser();
+  const { data: user, loader } = useFetchUser();
   const { data } = useUserData();
   return (
     <View
@@ -98,7 +98,17 @@ const ProfileScreen = () => {
             end={{x: 0, y: 1}}
             colors= {["#01CDE3", "#0185F7"]}
           >
-            <Text style={styles.statNumber}>{user?.}</Text>
+            <Text style={styles.statNumber}>{user?.orders?.length}</Text>
+            <Text style={styles.statLabel}>Enrolled</Text>
+          </LinearGradient>
+          <LinearGradient
+          style={styles.statBox}
+            start={{x: 0, y: 1}}
+            end={{x: 1, y: 0}}
+            colors= {["#BF6FF8", "#3C1BE9"]}
+          >
+            <Text style={styles.statNumber}>0</Text>
+            <Text style={styles.statLabel}>Certification</Text>
           </LinearGradient>
         </View>
       </View>
