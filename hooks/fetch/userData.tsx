@@ -24,13 +24,8 @@
 import { useQuery } from '@tanstack/react-query';
 import * as SecureStore from 'expo-secure-store';
 
-interface UserData {
-  name: string;
-  email: string;
-  avatar: string;
-}
 
-const fetchUserData = async (): Promise<UserData> => {
+const fetchUserData = async (): Promise<UserType> => {
   const name = await SecureStore.getItemAsync('name');
   const email = await SecureStore.getItemAsync('email');
   const avatar = await SecureStore.getItemAsync('avatar');
@@ -43,7 +38,7 @@ const fetchUserData = async (): Promise<UserData> => {
 };
 
 export const useUserData = () => {
-  return useQuery<UserData>({
+  return useQuery<UserType>({
     queryKey: ['userData'],
     queryFn: fetchUserData,
     staleTime: 1000 * 60 * 5, // 5 minutes

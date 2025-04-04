@@ -9,68 +9,109 @@ import {
   Text,
   View,
 } from "react-native";
-import React from 'react'
-import { useUserData } from '@/hooks/fetch/userData'
-import { useTheme } from '@/context/ThemeContext'
-import { useFetchUser } from '@/hooks/fetch/fetchUserHook'
-import { fontSizes, IsAndroid, IsHaveNotch, IsIPAD } from '@/themes/app.constant'
-import { scale, verticalScale } from 'react-native-size-matters'
+import React from "react";
+import { useUserData } from "@/hooks/fetch/userData";
+import { useTheme } from "@/context/ThemeContext";
+import { useFetchUser } from "@/hooks/fetch/fetchUserHook";
+import {
+  fontSizes,
+  IsAndroid,
+  IsHaveNotch,
+  IsIPAD,
+} from "@/themes/app.constant";
+import { scale, verticalScale } from "react-native-size-matters";
 import { LinearGradient } from "expo-linear-gradient";
 import ThemeSwitcher from "@/components/common/ThemeSwitcher";
 
 const ProfileScreen = () => {
-  const { theme } = useTheme()
-  const {user, loader } = useFetchUser();
-  const { data } = useUserData()
+  const { theme } = useTheme();
+  const { user, loader } = useFetchUser();
+  const { data } = useUserData();
   return (
     <View
-    style={[
-      styles.container,
-      {
-        backgroundColor: theme.dark ? "#101010" : "#f5f5f5",
-      },
-    ]}
-  >
-    <LinearGradient
-      colors={
-        theme.dark
-          ? ["#121121", "#3c43485c", "#121121"]
-          : ["#6248FF", "#8673FC"]
-      }
-      start={theme.dark ? { x: 1, y: 1 } : { x: 0, y: 1 }}
-      end={theme.dark ? { x: 0, y: 1 } : { x: 0, y: 0 }}
-      style={styles.header}
+      style={[
+        styles.container,
+        {
+          backgroundColor: theme.dark ? "#101010" : "#f5f5f5",
+        },
+      ]}
     >
-      <StatusBar barStyle={"light-content"} />
-      <SafeAreaView style={{ paddingTop: IsAndroid ? verticalScale(20) : 0 }}>
-        <View style={styles.headerContent}>
-          <Text style={styles.headerTitle}>Profile</Text>
-          <View>
-            <ThemeSwitcher />
+      <LinearGradient
+        colors={
+          theme.dark
+            ? ["#121121", "#3c43485c", "#121121"]
+            : ["#6248FF", "#8673FC"]
+        }
+        start={theme.dark ? { x: 1, y: 1 } : { x: 0, y: 1 }}
+        end={theme.dark ? { x: 0, y: 1 } : { x: 0, y: 0 }}
+        style={styles.header}
+      >
+        <StatusBar barStyle={"light-content"} />
+        <SafeAreaView style={{ paddingTop: IsAndroid ? verticalScale(20) : 0 }}>
+          <View style={styles.headerContent}>
+            <Text style={styles.headerTitle}>Profile</Text>
+            <View>
+              <ThemeSwitcher />
+            </View>
+          </View>
+        </SafeAreaView>
+      </LinearGradient>
+      {/* Profile wrapper */}
+      <View
+        style={[
+          styles.profileWrapper,
+          {
+            backgroundColor: theme.dark ? "#121121" : "#fff",
+            shadowOpacity: theme.dark ? 0.12 : 0.25,
+          },
+        ]}
+      >
+        <View style={{ flexDirection: "row" }}>
+          {data?.avatar && (
+            <Image source={{ uri: data?.avatar }} style={styles.profileImage} />
+          )}
+          <View style={styles.profileTextContainer}>
+            <Text
+              style={[
+                styles.profileName,
+                { color: theme.dark ? "#fff" : "#000" },
+              ]}
+            >
+              {data?.name}
+            </Text>
+            <Text
+              style={[
+                styles.profileTitle,
+                { color: theme.dark ? "#fff" : "#000" },
+              ]}
+            >
+              {data?.email}
+            </Text>
           </View>
         </View>
-      </SafeAreaView>
-    </LinearGradient>
-    {/* Profile wrapper */}
-    <View style={[styles.profileWrapper, 
-      {backgroundColor: theme.dark ? "#121121" : "#fff",
-        shadowOpacity: theme.dark ? 0.12 : 0.25
-      }]}>
-        <Image 
-          style={styles.profileImage}
-          source={{ uri: }}
-        />
+        <View
+          style={styles.statsContainer}
+        >
+          <LinearGradient
+          style={styles.statBox}
+            start={{x: 1, y: 0}}
+            end={{x: 0, y: 1}}
+            colors= {["#01CDE3", "#0185F7"]}
+          >
+            <Text style={styles.statNumber}>{user?.}</Text>
+          </LinearGradient>
+        </View>
+      </View>
     </View>
-    </View>
-  )
-}
+  );
+};
 
-export default ProfileScreen
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5"
+    backgroundColor: "#f5f5f5",
   },
   header: {
     height: verticalScale(180),
@@ -157,5 +198,4 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_400Regular",
     color: "#fff",
   },
-
-})
+});

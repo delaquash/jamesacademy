@@ -7,25 +7,26 @@ type onBoardingSlidesTypes = {
   };
   
   type UserType = {
-    id: string;
-    name: string;
-    email: string;
-    password: string;
-    phone_number: string;
-    avatar: string;
-    stripeCustomerId: string;
-    githubUserName: string;
-    role: string;
+    id?: string;
+    name?: string;
+    email?: string;
+    password?: string;
+    phone_number?: string;
+    avatar?: string;
+    stripeCustomerId?: string;
+    githubUserName?: string;
+    role?: string;
     pushToken?: string;
-    verified: boolean;
-    reviews: ReviewsType[];
-    orders: OrderType[];
-    reviewsReplies: ReviewsType[];
-    Notification: NotificationType[];
-    Tickets: TicketsTypes[];
-    createdAt: Date;
-    updatedAt: Date;
+    verified?: boolean;
+    reviews?: ReviewsType[];
+    orders?: OrderType[];
+    reviewsReplies?: ReviewsType[];
+    Notification?: NotificationType[];
+    Tickets?: TicketsTypes[];
+    createdAt?: Date;
+    updatedAt?: Date;
   };
+  
   
   type ReviewsType = {
     id: string;
