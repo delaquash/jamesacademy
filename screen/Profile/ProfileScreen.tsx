@@ -22,6 +22,7 @@ import {
 import { scale, verticalScale } from "react-native-size-matters";
 import { LinearGradient } from "expo-linear-gradient";
 import ThemeSwitcher from "@/components/common/ThemeSwitcher";
+import { Feather, FontAwesome, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 
 const ProfileScreen = () => {
   const { theme } = useTheme();
@@ -112,6 +113,441 @@ const ProfileScreen = () => {
           </LinearGradient>
         </View>
       </View>
+
+      {/* Profile Options */}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{ padding: scale(20) }}
+      >
+        <Pressable
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: verticalScale(20),
+          }}
+        >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  width: scale(38),
+                  height: scale(38),
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: scale(10),
+                  borderWidth: 1,
+                  borderColor: "#E2DDFF",
+                }}
+              >
+                <Feather
+                  name="book-open"
+                  size={scale(21)}
+                  color={theme.dark ? "#fff" : "#0047AB"}
+                />
+              </View>
+              <View>
+                  <Text
+                    style={{
+                      marginLeft: scale(10),
+                      fontSize: fontSizes.FONT22,
+                      fontFamily: "Poppins_400Regular",
+                      color: theme?.dark ? "#fff" : "#000",
+                    }}
+                  >
+                    Enrolled Courses
+                  </Text>
+                  <Text
+                    style={{
+                      marginLeft: scale(10),
+                      fontSize: fontSizes.FONT15,
+                      fontFamily: "Poppins_400Regular",
+                      color: theme?.dark ? "#fff" : "#000",
+                      opacity: 0.6,
+                    }}
+                  >
+                    Explore your all enrolled courses
+                  </Text>
+              </View>
+            </View>
+        </Pressable>
+        <Pressable
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: verticalScale(20),
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                width: scale(38),
+                height: scale(38),
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: scale(10),
+                borderWidth: 1,
+                borderColor: "#E2DDFF",
+              }}
+            >
+              <MaterialIcons
+                name="leaderboard"
+                size={scale(23)}
+                color={theme.dark ? "#fff" : "#0047AB"}
+              />
+            </View>
+            <View>
+              <Text
+                style={{
+                  marginLeft: scale(10),
+                  fontSize: fontSizes.FONT22,
+                  fontFamily: "Poppins_400Regular",
+                  color: theme?.dark ? "#fff" : "#000",
+                }}
+              >
+                Course Leaderboard
+              </Text>
+              <Text
+                style={{
+                  marginLeft: scale(10),
+                  fontSize: fontSizes.FONT15,
+                  fontFamily: "Poppins_400Regular",
+                  color: theme?.dark ? "#fff" : "#000",
+                  opacity: 0.6,
+                }}
+              >
+                Let's see your position in Leaderboard
+              </Text>
+            </View>
+          </View>
+        </Pressable>
+
+        <Pressable
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: verticalScale(20),
+          }}
+          // onPress={() => router.push("/(routes)/my-tickets")}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                width: scale(38),
+                height: scale(38),
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: scale(10),
+                borderWidth: 1,
+                borderColor: "#E2DDFF",
+              }}
+            >
+              <MaterialCommunityIcons
+                name="message-alert-outline"
+                size={scale(22)}
+                color={theme.dark ? "#fff" : "#0047AB"}
+              />
+            </View>
+            <View>
+              <Text
+                style={{
+                  marginLeft: scale(10),
+                  fontSize: fontSizes.FONT22,
+                  fontFamily: "Poppins_400Regular",
+                  color: theme?.dark ? "#fff" : "#000",
+                }}
+              >
+                My Tickets
+              </Text>
+              <Text
+                style={{
+                  marginLeft: scale(10),
+                  fontSize: fontSizes.FONT15,
+                  fontFamily: "Poppins_400Regular",
+                  color: theme?.dark ? "#fff" : "#000",
+                  opacity: 0.6,
+                }}
+              >
+                Explore your all support tickets
+              </Text>
+            </View>
+          </View>
+        </Pressable>
+
+        <Pressable
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: verticalScale(20),
+          }}
+          // onPress={() => router.push("/(routes)/support-center")}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                width: scale(38),
+                height: scale(38),
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: scale(10),
+                borderWidth: 1,
+                borderColor: "#E2DDFF",
+              }}
+            >
+              <FontAwesome
+                name="support"
+                size={scale(22)}
+                color={theme.dark ? "#fff" : "#0047AB"}
+              />
+            </View>
+            <View>
+              <Text
+                style={{
+                  marginLeft: scale(10),
+                  fontSize: fontSizes.FONT22,
+                  fontFamily: "Poppins_400Regular",
+                  color: theme?.dark ? "#fff" : "#000",
+                }}
+              >
+                Support Center
+              </Text>
+              <Text
+                style={{
+                  marginLeft: scale(10),
+                  fontSize: fontSizes.FONT15,
+                  fontFamily: "Poppins_400Regular",
+                  color: theme?.dark ? "#fff" : "#000",
+                  opacity: 0.6,
+                }}
+              >
+                Explore our fastest support center
+              </Text>
+            </View>
+          </View>
+        </Pressable>
+
+        <Pressable
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: verticalScale(20),
+          }}
+          // onPress={() => router.push("/(routes)/notification")}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                width: scale(38),
+                height: scale(38),
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: scale(10),
+                borderWidth: 1,
+                borderColor: "#E2DDFF",
+              }}
+            >
+              <Ionicons
+                name="notifications"
+                size={scale(22)}
+                color={theme.dark ? "#fff" : "#0047AB"}
+              />
+            </View>
+            <View>
+              <Text
+                style={{
+                  marginLeft: scale(10),
+                  fontSize: fontSizes.FONT22,
+                  fontFamily: "Poppins_400Regular",
+                  color: theme?.dark ? "#fff" : "#000",
+                }}
+              >
+                Notifications
+              </Text>
+              <Text
+                style={{
+                  marginLeft: scale(10),
+                  fontSize: fontSizes.FONT15,
+                  fontFamily: "Poppins_400Regular",
+                  color: theme?.dark ? "#fff" : "#000",
+                  opacity: 0.6,
+                }}
+              >
+                Explore the important notifications
+              </Text>
+            </View>
+          </View>
+        </Pressable>
+        <Pressable
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: verticalScale(20),
+          }}
+          // onPress={() => router.push("/(routes)/settings")}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                width: scale(38),
+                height: scale(38),
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: scale(10),
+                borderWidth: 1,
+                borderColor: "#E2DDFF",
+              }}
+            >
+              <Ionicons
+                name="settings-sharp"
+                size={scale(23)}
+                color={theme.dark ? "#fff" : "#0047AB"}
+              />
+            </View>
+            <View>
+              <Text
+                style={{
+                  marginLeft: scale(10),
+                  fontSize: fontSizes.FONT22,
+                  fontFamily: "Poppins_400Regular",
+                  color: theme?.dark ? "#fff" : "#000",
+                }}
+              >
+                Settings
+              </Text>
+              <Text
+                style={{
+                  marginLeft: scale(10),
+                  fontSize: fontSizes.FONT15,
+                  fontFamily: "Poppins_400Regular",
+                  color: theme?.dark ? "#fff" : "#000",
+                  opacity: 0.6,
+                }}
+              >
+                Control the app as per your preferences
+              </Text>
+            </View>
+          </View>
+        </Pressable>
+
+        <Pressable
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: verticalScale(20),
+          }}
+          // onPress={async () =>
+          //   await WebBrowser.openBrowserAsync(
+          //     "https://www.becodemy.com/privacy-policy"
+          //   )
+          // }
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                width: scale(38),
+                height: scale(38),
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: scale(10),
+                borderWidth: 1,
+                borderColor: "#E2DDFF",
+              }}
+            >
+              <MaterialIcons
+                name="policy"
+                size={scale(23)}
+                color={theme.dark ? "#fff" : "#0047AB"}
+              />
+            </View>
+            <View>
+              <Text
+                style={{
+                  marginLeft: scale(10),
+                  fontSize: fontSizes.FONT22,
+                  fontFamily: "Poppins_400Regular",
+                  color: theme?.dark ? "#fff" : "#000",
+                }}
+              >
+                Privacy & Policy
+              </Text>
+              <Text
+                style={{
+                  marginLeft: scale(10),
+                  fontSize: fontSizes.FONT15,
+                  fontFamily: "Poppins_400Regular",
+                  color: theme?.dark ? "#fff" : "#000",
+                  opacity: 0.6,
+                }}
+              >
+                Explore our privacy and policy
+              </Text>
+            </View>
+          </View>
+        </Pressable>
+
+        <Pressable
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: theme.dark ? verticalScale(90) : verticalScale(30),
+          }}
+          // onPress={() => logoutHandler()}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                width: scale(38),
+                height: scale(38),
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: scale(10),
+                borderWidth: 1,
+                borderColor: "#E2DDFF",
+              }}
+            >
+              <MaterialIcons
+                name="logout"
+                size={scale(23)}
+                color={theme.dark ? "#fff" : "#0047AB"}
+              />
+            </View>
+            <View>
+              <Text
+                style={{
+                  marginLeft: scale(10),
+                  fontSize: fontSizes.FONT22,
+                  fontFamily: "Poppins_400Regular",
+                  color: theme?.dark ? "#fff" : "#000",
+                }}
+              >
+                Log Out
+              </Text>
+              <Text
+                style={{
+                  marginLeft: scale(10),
+                  fontSize: fontSizes.FONT15,
+                  fontFamily: "Poppins_400Regular",
+                  color: theme?.dark ? "#fff" : "#000",
+                  opacity: 0.6,
+                }}
+              >
+                Logging out from your account
+              </Text>
+            </View>
+          </View>
+        </Pressable>
+      </ScrollView>
     </View>
   );
 };
