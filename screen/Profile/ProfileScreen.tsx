@@ -22,12 +22,19 @@ import {
 import { scale, verticalScale } from "react-native-size-matters";
 import { LinearGradient } from "expo-linear-gradient";
 import ThemeSwitcher from "@/components/common/ThemeSwitcher";
+import * as SecureStore from 'expo-secure-store';
 import { Feather, FontAwesome, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 const ProfileScreen = () => {
   const { theme } = useTheme();
   const { data: user, loader } = useFetchUser();
   const { data } = useUserData();
+
+  const logoutHandler = async() => {
+    await SecureStore.deleteItemAsync("accessToken")
+    router.push("/(routes)/onboarding")
+  }
   return (
     <View
       style={[
@@ -502,7 +509,7 @@ const ProfileScreen = () => {
             justifyContent: "space-between",
             marginBottom: theme.dark ? verticalScale(90) : verticalScale(30),
           }}
-          // onPress={() => logoutHandler()}
+          onPress={() => logoutHandler()}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View
