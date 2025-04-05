@@ -1,15 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import CourseScreen from '@/screen/courses/CourseScreen'
 
-const index = () => {
+const ResourceScreen = () => {
   return (
-    <CourseScreen />
+    <View>
+      <Text>ResourceScreen</Text>
+    </View>
   )
 }
 
-
-
-export default index
+export default ResourceScreen
 
 const styles = StyleSheet.create({})
