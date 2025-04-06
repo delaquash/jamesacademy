@@ -2,6 +2,9 @@ import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from 'rea
 import React from 'react';
 import { useTheme } from '@/context/ThemeContext';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { fontSizes, windowHeight, windowWidth } from '@/themes/app.constant';
+import GradientText from '@/components/common/GradientText';
+import { scale, verticalScale } from 'react-native-size-matters';
 
 const CourseScreen = () => {
     const { theme } = useTheme()
@@ -19,6 +22,58 @@ const CourseScreen = () => {
         <StatusBar 
             barStyle={!theme.dark ? "dark-content" : "light-content"}
         />
+        <View
+            style={{marginHorizontal: windowWidth(20)}}
+        >
+            <View
+                style={{ flexDirection: "row", marginTop: windowHeight(8)}}
+            >
+                <Text
+                    style={{
+                        fontSize: 24,
+                        fontFamily: "Poppins_500Medium",
+                        color: theme.dark ? "#fff" : "#000"
+                    }}
+                >
+                    Popular
+                </Text>
+                <GradientText 
+                    text='Courses'
+                    styles={{
+                        fontSizes: fontSizes.FONT35,
+                        fontFamily: "Poppins_500SemiBold",
+                        paddingLeft: scale(5)
+                    }}
+                />
+            </View>
+            <View
+                style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                }}
+            >
+                <View
+                    style={{
+                        backgroundColor: "#12BB70",
+                        width: windowWidth(15),
+                        height: windowWidth(15),
+                        borderRadius: 300,
+                        marginTop: verticalScale(-18)
+                    }}
+                />
+                    <Text
+                        style={{
+                            fontFamily: "Poppins_400Regular",
+                            fontSize: fontSizes.FONT18,
+                            paddingLeft: windowWidth(5),
+                            paddingBottom: windowHeight(20),
+                            color: theme.dark? "#fff" : "#000"
+                        }}
+                    >
+                        Our Comprehensive Project Based Courses
+                    </Text>
+            </View>
+        </View>
     </ScrollView>
    </SafeAreaView>
   )
