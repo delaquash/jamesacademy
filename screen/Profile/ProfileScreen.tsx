@@ -347,7 +347,7 @@ const ProfileScreen = () => {
             justifyContent: "space-between",
             marginBottom: verticalScale(20),
           }}
-          // onPress={() => router.push("/(routes)/notification")}
+          onPress={() => router.push("/(routes)/notification")}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View
