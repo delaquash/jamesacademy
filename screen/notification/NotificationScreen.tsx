@@ -29,9 +29,61 @@ const NotificationScreen = () => {
     
 
   return (
-    <View>
-      <Text>NotificationScreen</Text>
-    </View>
+    <SafeAreaView
+        style={{ flex: 1, backgroundColor: theme.dark ? "#101010" : "#fff" }}
+        edges={["top"]}
+    >
+    <View style={{ overflow: "hidden", paddingBottom: verticalScale(1) }}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          height: theme.dark ? verticalScale(25) : verticalScale(25),
+          backgroundColor: theme.dark ? "#131313" : "#fff",
+          paddingHorizontal: scale(8),
+          paddingBottom: theme.dark ? verticalScale(5) : verticalScale(0),
+          shadowColor: theme.dark ? "#fff" : "#000",
+          shadowOpacity: theme.dark ? 0.1 : 0.1,
+          shadowOffset: { width: 0, height: 1 },
+          shadowRadius: 1,
+          elevation: theme.dark ? 5 : 5,
+        }}
+      >
+        <Pressable
+          onPress={() => router.back()}
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: scale(5),
+          }}
+        >
+          <AntDesign
+            name="left"
+            size={scale(22)}
+            color={theme.dark ? "#fff" : "005DE0"}
+          />
+          <Text
+            style={{
+              color: theme?.dark ? "#fff" : "#005DE0",
+              fontSize: fontSizes.FONT20,
+            }}
+          >
+            Back
+          </Text>
+        </Pressable>
+        <Text
+            style={{
+              color: theme.dark ? "#fff" : "#000",
+              textAlign: "center",
+              width: scale(220),
+              fontSize: fontSizes.FONT22,
+            }}
+          >
+            Notifications
+          </Text>
+        </View>
+      </View>
+    </SafeAreaView>
   )
 }
 
