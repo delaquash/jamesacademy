@@ -1,14 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React from "react";
+import ResourceScreen from '@/screen/Resource/ResourceScreen';
+
 
 const index = () => {
   return (
-    <View>
-      <Text>Resources</Text>
-    </View>
+    <ResourceScreen />
   )
 }
 
 export default index
-
-const styles = StyleSheet.create({})
