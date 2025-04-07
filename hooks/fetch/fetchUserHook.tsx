@@ -12,7 +12,7 @@ interface IUser {
  * Function to set the Authorization header for Axios requests.
  * Ensures every request includes the stored token.
  */
-const setAuthorizationHeader = async () => {
+export const setAuthorizationHeader = async () => {
   const token = await SecureStore.getItemAsync("token"); // Retrieve token from SecureStore
   if (token) {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`; // Set default Authorization header

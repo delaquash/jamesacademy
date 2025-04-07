@@ -27,6 +27,7 @@ const NotificationScreen = () => {
       const { data: user, loader } = useFetchUser();
       const { data } = useUserData();
     
+
   return (
     <View>
       <Text>NotificationScreen</Text>
@@ -36,4 +37,52 @@ const NotificationScreen = () => {
 
 export default NotificationScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: "#fff",
+        marginTop: verticalScale(2),
+      },
+      sectionHeader: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#333",
+        marginTop: verticalScale(8),
+        marginBottom: 5,
+      },
+      notificationItem: {
+        flexDirection: "row",
+        paddingVertical: verticalScale(5),
+        backgroundColor: "#fff",
+      },
+      notificationIcon: {
+        width: scale(30),
+        height: scale(30),
+        borderRadius: 20,
+        backgroundColor: "#FFCA28",
+        justifyContent: "center",
+        alignItems: "center",
+        marginRight: 10,
+      },
+      notificationInitial: {
+        color: "#fff",
+        fontWeight: "bold",
+        fontSize: 18,
+      },
+      notificationText: {
+        flex: 1,
+        color: "#333",
+        fontFamily: "Poppins_400Regular",
+        fontSize: fontSizes.FONT17,
+      },
+      deleteButton: {
+        backgroundColor: "red",
+        justifyContent: "center",
+        alignItems: "center",
+        width: scale(50),
+        height: "100%",
+      },
+      deleteButtonText: {
+        color: "#fff",
+        fontWeight: "bold",
+      },
+})
