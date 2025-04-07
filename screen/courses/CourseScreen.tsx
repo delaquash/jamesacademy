@@ -1,14 +1,16 @@
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '@/context/ThemeContext';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { fontSizes, windowHeight, windowWidth } from '@/themes/app.constant';
 import GradientText from '@/components/common/GradientText';
 import { scale, verticalScale } from 'react-native-size-matters';
+import { Skeleton } from 'moti/skeleton';
 
 const CourseScreen = () => {
     const { theme } = useTheme()
-    const bottomTabBarHeight = useBottomTabBarHeight()
+    const bottomTabBarHeight = useBottomTabBarHeight();
+    const [loading, setLoading] = useState(true)
   return (
    <SafeAreaView
         style={{
@@ -18,6 +20,7 @@ const CourseScreen = () => {
    >
     <ScrollView
         showsVerticalScrollIndicator={false}
+        style={{ marginTop: verticalScale(-35) }}
     >
         <StatusBar 
             barStyle={!theme.dark ? "dark-content" : "light-content"}
@@ -74,6 +77,14 @@ const CourseScreen = () => {
                     </Text>
             </View>
         </View>
+        {loading ? (
+            <View>
+                <Skeleton />
+            </View>) : (
+                <View>
+
+                </View>
+            )}
     </ScrollView>
    </SafeAreaView>
   )
