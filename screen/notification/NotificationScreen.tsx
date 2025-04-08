@@ -23,6 +23,7 @@ import { useUserData } from "@/hooks/fetch/userData";
 import { useTheme } from "@/context/ThemeContext";
 import { setAuthorizationHeader, useFetchUser } from "@/hooks/fetch/fetchUserHook";
 import { fetchNotifications, useNotification } from "@/hooks/fetch/UseNotificationHooks";
+import SkeltonLoader from "@/utils/Skelton";
 
 const NotificationScreen = () => {
      const { theme } = useTheme();
@@ -89,9 +90,42 @@ const {isLoading, notificationsData,notificationDeleteHandler} =  useNotificatio
         </View>
       </View>
       {isLoading ? (
-        <></>
+        <View style={{ padding: scale(16)}}>
+          {[0,1,2,3,4,5].map((num: number, index: number)=>(
+            <MotiView
+              transition={{
+                type: "timing",
+              }}
+              style={{
+                flexDirection: "row",
+                gap: scale(15),
+                marginBottom: verticalScale(15),
+              }}
+              key={index}
+              animate={{
+                backgroundColor: theme.dark ? "#101010" : "#fff",
+              }}
+            >
+              <Skeleton
+                colorMode={theme.dark ? "dark" : "light"}
+                radius= {"round"}
+                height={scale(60)}
+                width={scale(60)}
+              />
+               <Skeleton
+                  colorMode={theme.dark ? "dark" : "light"}
+                  height={scale(50)}
+                  width={scale(240)}
+                />
+            </MotiView>
+          ))}
+        </View>
       ) : (
-        <></>
+        <View>
+          <SafeAreaView>
+            
+          </SafeAreaView>
+        </View>
       )}
     </SafeAreaView>
   )
