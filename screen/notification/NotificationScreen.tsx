@@ -34,7 +34,7 @@ const NotificationScreen = () => {
 // Fetch notifications from the server
 const {isLoading, notificationsData,notificationDeleteHandler} =  useNotification()
 
-
+const renderItem=() => {}
   return (
     <SafeAreaView
         style={{ flex: 1, backgroundColor: theme.dark ? "#101010" : "#fff" }}
@@ -122,7 +122,8 @@ const {isLoading, notificationsData,notificationDeleteHandler} =  useNotificatio
           ))}
         </View>
       ) : (
-        <View>
+        <>
+             <View>
           <ScrollView
             horizontal={true}
             showsHorizontalScrollIndicator={false}
@@ -227,6 +228,13 @@ const {isLoading, notificationsData,notificationDeleteHandler} =  useNotificatio
               
           </ScrollView>
         </View>
+
+        <FlatList 
+          data={notificationsData}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+        />
+        </>
       )}
     </SafeAreaView>
   )
