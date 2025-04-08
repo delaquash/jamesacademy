@@ -28,11 +28,11 @@ const WelcomeHeader = () => {
         <View
             style={{
                 flexDirection: 'row',
-                paddingTop: IsHaveNotch ? 
-                IsIPAD 
-                    ? verticalScale(30) 
-                    : verticalScale(40)
-                : verticalScale(30),
+                // paddingTop: IsHaveNotch ? 
+                // IsIPAD 
+                //     ? verticalScale(30) 
+                //     : verticalScale(40)
+                // : verticalScale(30),
                 justifyContent: 'space-between'
             }}
         >

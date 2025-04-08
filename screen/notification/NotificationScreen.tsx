@@ -27,6 +27,7 @@ import SkeltonLoader from "@/utils/Skelton";
 
 const NotificationScreen = () => {
      const { theme } = useTheme();
+     const [active, setActive] = useState("All")
       const { data: user, loader } = useFetchUser();
       const { data } = useUserData();
     
@@ -122,11 +123,109 @@ const {isLoading, notificationsData,notificationDeleteHandler} =  useNotificatio
         </View>
       ) : (
         <View>
-          <SafeAreaView
-            
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            style={{ padding: scale(10)}}
           >
-            
-          </SafeAreaView>
+            <TouchableOpacity
+                  style={{
+                    padding: verticalScale(8),
+                    backgroundColor:
+                      active === "All"
+                        ? "#705DF2"
+                        : theme.dark
+                        ? "#3c43485c"
+                        : "#f5f5f5",
+                    borderRadius: scale(5),
+                    marginRight: scale(20),
+                  }}
+              onPress={()=>setActive("All")}
+            >
+               <Text
+                  style={{
+                    color: "#fff",
+                    fontFamily: "Poppins_500Medium",
+                    fontSize: fontSizes.FONT18,
+                  }}
+                >
+                  All
+                </Text> 
+            </TouchableOpacity>
+            <TouchableOpacity
+                  style={{
+                    padding: verticalScale(8),
+                    backgroundColor:
+                      active === "Courses"
+                        ? "#705DF2"
+                        : theme.dark
+                        ? "#3c43485c"
+                        : "#f5f5f5",
+                    borderRadius: scale(5),
+                    marginRight: scale(20),
+                  }}
+                  onPress={() => setActive("Courses")}
+                >
+                  <Text
+                    style={{
+                      color: theme.dark ? "#fff" : "#000",
+                      fontFamily: "Poppins_500Medium",
+                      fontSize: fontSizes.FONT18,
+                    }}
+                  >
+                    Courses
+                  </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                  style={{
+                    padding: verticalScale(8),
+                    backgroundColor:
+                      active === "Resources"
+                        ? "#705DF2"
+                        : theme.dark
+                        ? "#3c43485c"
+                        : "#f5f5f5",
+                    borderRadius: scale(5),
+                    marginRight: scale(20),
+                  }}
+                  onPress={() => setActive("Resources")}
+                >
+                  <Text
+                    style={{
+                      color: theme.dark ? "#fff" : "#000",
+                      fontFamily: "Poppins_500Medium",
+                      fontSize: fontSizes.FONT18,
+                    }}
+                  >
+                    Resources
+                  </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                  style={{
+                    padding: verticalScale(8),
+                    backgroundColor:
+                      active === "Support Center"
+                        ? "#705DF2"
+                        : theme.dark
+                        ? "#3c43485c"
+                        : "#f5f5f5",
+                    borderRadius: scale(5),
+                    marginRight: scale(20),
+                  }}
+                  onPress={() => setActive("Support Center")}
+                >
+                  <Text
+                    style={{
+                      color: theme.dark ? "#fff" : "#000",
+                      fontFamily: "Poppins_500Medium",
+                      fontSize: fontSizes.FONT18,
+                    }}
+                  >
+                    Support Center
+                  </Text>
+            </TouchableOpacity>
+              
+          </ScrollView>
         </View>
       )}
     </SafeAreaView>

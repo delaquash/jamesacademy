@@ -14,17 +14,21 @@ const HomeScreen = () => {
   const { theme } = useTheme()
   const [ loading, setLoading ] = useState(true)
   return (
-    <LinearGradient
+    <>
+      <LinearGradient
       colors={theme.dark ? ['#180D41', "#2A2D32", "#131313"] : ["#fff", "#f7f7f7"]}
       start={{ x: 0, y:0}}
       end={{ x: 0, y:1 }}
       style={{
         flex: 1,
+        paddingTop: windowHeight(10), 
         backgroundColor: theme.dark ? "#101010" : "#fff"
       }}
     >
-      <WelcomeHeader />
-      <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop: scale(20)}}>
+      <View style={{ marginBottom: verticalScale(10)}}>
+        <WelcomeHeader />
+      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <HomeBanner />
           <View
             style={{
@@ -84,6 +88,7 @@ const HomeScreen = () => {
           </View>
       </ScrollView>
     </LinearGradient>
+    </>
   )
 }
 
