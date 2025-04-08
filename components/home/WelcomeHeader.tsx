@@ -44,7 +44,7 @@ const WelcomeHeader = () => {
                         fontFamily: "Poppins_600SemiBold",
                     }}
                 >
-                    Hi {data?.name.split(" ")[0]},
+                    Hi {data?.name?.split(" ")[0]},
                 </Text>
                 <Text
                     style={{

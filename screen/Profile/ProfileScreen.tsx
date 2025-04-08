@@ -28,7 +28,7 @@ import { router } from "expo-router";
 
 const ProfileScreen = () => {
   const { theme } = useTheme();
-  const { data: user, loader } = useFetchUser();
+  // const { data: user, loader } = useFetchUser();
   const { data } = useUserData();
 
   const logoutHandler = async() => {
@@ -106,7 +106,7 @@ const ProfileScreen = () => {
             end={{x: 0, y: 1}}
             colors= {["#01CDE3", "#0185F7"]}
           >
-            <Text style={styles.statNumber}>{user?.orders?.length}</Text>
+            {/* <Text style={styles.statNumber}>{user?.orders?.length}</Text> */}
             <Text style={styles.statLabel}>Enrolled</Text>
           </LinearGradient>
           <LinearGradient

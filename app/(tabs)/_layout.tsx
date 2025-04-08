@@ -1,5 +1,5 @@
 import { useTheme } from "@/context/ThemeContext";
-import { fetchUser } from "@/hooks/fetch/fetchUserHook";
+import { useFetchUser } from "@/hooks/fetch/fetchUserHook";
 import { fontSizes, IsAndroid, IsIOS, IsIPAD } from "@/themes/app.constant";
 import { Feather, Ionicons, Octicons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
@@ -10,7 +10,7 @@ import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 
 export default function _layout () {
   const { theme} = useTheme();
-  const { loader } = fetchUser()
+  const { loader} = useFetchUser()
   return (
     <Tabs
       screenOptions={({ route }) => {

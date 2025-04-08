@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useTheme } from '@/context/ThemeContext'
 import WelcomeHeader from '@/components/home/WelcomeHeader'
-import { ScrollView } from 'react-native-gesture-handler'
 import HomeBanner from '@/components/home/HomeBanner'
 import { fontSizes, windowHeight, windowWidth } from '@/themes/app.constant'
 import { scale, verticalScale } from 'react-native-size-matters'
@@ -25,7 +24,7 @@ const HomeScreen = () => {
       }}
     >
       <WelcomeHeader />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop: scale(20)}}>
         <HomeBanner />
           <View
             style={{

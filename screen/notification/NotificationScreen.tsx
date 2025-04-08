@@ -122,7 +122,9 @@ const {isLoading, notificationsData,notificationDeleteHandler} =  useNotificatio
         </View>
       ) : (
         <View>
-          <SafeAreaView>
+          <SafeAreaView
+            
+          >
             
           </SafeAreaView>
         </View>
