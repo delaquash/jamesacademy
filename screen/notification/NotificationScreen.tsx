@@ -24,7 +24,7 @@ import { useTheme } from "@/context/ThemeContext";
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { setAuthorizationHeader, useFetchUser } from "@/hooks/fetch/fetchUserHook";
 import { fetchNotifications, useNotification } from "@/hooks/fetch/UseNotificationHooks";
-import SkeltonLoader from "@/utils/Skelton";
+import moment from "moment";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 
 interface RenderItemProps {
@@ -49,14 +49,15 @@ const NotificationScreen = () => {
 // Fetch notifications from the server
 const {isLoading, notificationsData, notificationDeleteHandler} =  useNotification()
 
-const renderItem=({ item }: RenderItemProps) => {
+const renderItem=({ item }: {item : NotificationType} ) => {
 
   const renderRightActions = () => (
     <Pressable style={styles.deleteButton}>
       <MaterialIcons name="delete-outline" size={scale(25)} color={"#fff"} />
     </Pressable>
   );
-  <ReanimatedSwipeable
+  return (
+    <ReanimatedSwipeable
     renderRightActions={renderRightActions}
   >
     <Pressable
@@ -101,9 +102,21 @@ const renderItem=({ item }: RenderItemProps) => {
           >
             {item.message}
           </Text>
+          <Text
+            style={[
+              styles.notificationText,
+              {
+                opacity: 0.8,
+                color: theme.dark ? "#fff" : "#333",
+              },
+            ]}
+          >
+            {moment(item.createdAt).fromNow()}
+          </Text>
         </View>
     </Pressable>
   </ReanimatedSwipeable>
+  )
 }
   return (
     <SafeAreaView
