@@ -1,14 +1,14 @@
 import {
-    FlatList,
-    Image,
-    Pressable,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-  } from "react-native";
+  FlatList,
+  Image,
+  Pressable,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { scale, verticalScale } from "react-native-size-matters";
@@ -21,84 +21,91 @@ import { NotificationsData } from "@/config/constants";
 // import { Swipeable } from "react-native-gesture-handler";
 import { fetchUserData, useUserData } from "@/hooks/fetch/userData";
 import { useTheme } from "@/context/ThemeContext";
-import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
-import { setAuthorizationHeader, useFetchUser } from "@/hooks/fetch/fetchUserHook";
-import { fetchNotifications, useNotification } from "@/hooks/fetch/UseNotificationHooks";
+import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
+import {
+  setAuthorizationHeader,
+  useFetchUser,
+} from "@/hooks/fetch/fetchUserHook";
+import {
+  fetchNotifications,
+  useNotification,
+} from "@/hooks/fetch/UseNotificationHooks";
 import moment from "moment";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 
-interface RenderItemProps {
-  item: {
-    id: string,
-    title: string,
-    message: string,
-    status: string
-  }
-}
-
 const NotificationScreen = () => {
-     const { theme } = useTheme();
-     const [active, setActive] = useState("All")
-      const { data: user, loader } = useFetchUser();
-      const { data } = useUserData();
-      const { name, email, avatar } = data || {};
-      const [notificationData, setNotificationData] = useState<
-    NotificationType[]
-  >([]);
-    
-// Fetch notifications from the server
-const {isLoading, notificationsData, notificationDeleteHandler} =  useNotification()
-
-const renderItem=({ item }: {item : NotificationType} ) => {
-
-  const renderRightActions = () => (
-    <Pressable style={styles.deleteButton}>
-      <MaterialIcons name="delete-outline" size={scale(25)} color={"#fff"} />
-    </Pressable>
+  const { theme } = useTheme();
+  const [active, setActive] = useState("All");
+  const { data: user, loader } = useFetchUser();
+  const { data } = useUserData();
+  const { name, email, avatar } = data || {};
+  const [notificationData, setNotificationData] = useState<NotificationType[]>(
+    []
   );
-  return (
+
+  // Fetch notifications from the server
+  const { isLoading, notificationsData, notificationDeleteHandler } =
+    useNotification();
+
+  const renderItem = ({ item }: { item: NotificationType }) => (
     <ReanimatedSwipeable
-    renderRightActions={renderRightActions}
-  >
-    <Pressable
-      style={[styles.notificationItem, 
-        {
-          padding: scale(14),
-          paddingVertical: verticalScale(10),
-          backgroundColor: item.status === "Unread"
-              ? theme.dark 
-                ? "#3c4385c"
-                : "#f1f1f1"
-              : theme.dark 
-                ? "#101010"
-                : "#fff"
-        }
-      ]}
+      renderRightActions={() => (
+        <Pressable style={styles.deleteButton}>
+          <MaterialIcons
+            name="delete-outline"
+            size={scale(25)}
+            color={"#fff"}
+          />
+        </Pressable>
+      )}
     >
+      <Pressable
+        style={[
+          styles.notificationItem,
+          {
+            padding: scale(14),
+            paddingVertical: verticalScale(10),
+            backgroundColor:
+              item.status === "Unread"
+                ? theme.dark
+                  ? "#3c4385c"
+                  : "#f1f1f1"
+                : theme.dark
+                ? "#101010"
+                : "#fff",
+          },
+        ]}
+      >
         {avatar && (
-          <Image 
-              source={{ uri: user?.avatar! }}
-              width={scale(50)}
-              height={scale(50)}
-              borderRadius={scale(100)}
-              style={{ marginRight: verticalScale(8) }}
+          <Image
+            source={{ uri: user?.avatar! }}
+            width={scale(50)}
+            height={scale(50)}
+            borderRadius={scale(100)}
+            style={{ marginRight: verticalScale(8) }}
           />
         )}
-        <View style={{ width: scale(265)}}>
+        <View style={{ width: scale(265) }}>
           <Text
-            style={[styles.notificationText, {
-              fontWeight: "500",
-              fontFamily: "Poppins_500Medium",
-              fontSize: fontSizes.FONT18,
-              color: theme.dark ? "#fff" : "#000"
-            }]}
+            style={[
+              styles.notificationText,
+              {
+                fontWeight: "500",
+                fontFamily: "Poppins_500Medium",
+                fontSize: fontSizes.FONT18,
+                color: theme.dark ? "#fff" : "#000",
+              },
+            ]}
           >
-            {item.title} 
+            {item.title}
           </Text>
           <Text
-            style={[styles.notificationText, {
-              color: theme.dark ? "#fff" : "#333"
-            }]}
+            style={[
+              styles.notificationText,
+              {
+                color: theme.dark ? "#fff" : "#333",
+              },
+            ]}
           >
             {item.message}
           </Text>
@@ -114,54 +121,53 @@ const renderItem=({ item }: {item : NotificationType} ) => {
             {moment(item.createdAt).fromNow()}
           </Text>
         </View>
-    </Pressable>
-  </ReanimatedSwipeable>
-  )
-}
+      </Pressable>
+    </ReanimatedSwipeable>
+  );
   return (
     <SafeAreaView
-        style={{ flex: 1, backgroundColor: theme.dark ? "#101010" : "#fff" }}
-        edges={["top"]}
+      style={{ flex: 1, backgroundColor: theme.dark ? "#101010" : "#fff" }}
+      edges={["top"]}
     >
-    <View style={{ overflow: "hidden", paddingBottom: verticalScale(1) }}>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          height: theme.dark ? verticalScale(25) : verticalScale(25),
-          backgroundColor: theme.dark ? "#131313" : "#fff",
-          paddingHorizontal: scale(8),
-          paddingBottom: theme.dark ? verticalScale(5) : verticalScale(0),
-          shadowColor: theme.dark ? "#fff" : "#000",
-          shadowOpacity: theme.dark ? 0.1 : 0.1,
-          shadowOffset: { width: 0, height: 1 },
-          shadowRadius: 1,
-          elevation: theme.dark ? 5 : 5,
-        }}
-      >
-        <Pressable
-          onPress={() => router.back()}
+      <View style={{ overflow: "hidden", paddingBottom: verticalScale(1) }}>
+        <View
           style={{
             flexDirection: "row",
             alignItems: "center",
-            gap: scale(5),
+            height: theme.dark ? verticalScale(25) : verticalScale(25),
+            backgroundColor: theme.dark ? "#131313" : "#fff",
+            paddingHorizontal: scale(8),
+            paddingBottom: theme.dark ? verticalScale(5) : verticalScale(0),
+            shadowColor: theme.dark ? "#fff" : "#000",
+            shadowOpacity: theme.dark ? 0.1 : 0.1,
+            shadowOffset: { width: 0, height: 1 },
+            shadowRadius: 1,
+            elevation: theme.dark ? 5 : 5,
           }}
         >
-          <AntDesign
-            name="left"
-            size={scale(22)}
-            color={theme.dark ? "#fff" : "005DE0"}
-          />
-          <Text
+          <Pressable
+            onPress={() => router.back()}
             style={{
-              color: theme?.dark ? "#fff" : "#005DE0",
-              fontSize: fontSizes.FONT20,
+              flexDirection: "row",
+              alignItems: "center",
+              gap: scale(5),
             }}
           >
-            Back
-          </Text>
-        </Pressable>
-        <Text
+            <AntDesign
+              name="left"
+              size={scale(22)}
+              color={theme.dark ? "#fff" : "005DE0"}
+            />
+            <Text
+              style={{
+                color: theme?.dark ? "#fff" : "#005DE0",
+                fontSize: fontSizes.FONT20,
+              }}
+            >
+              Back
+            </Text>
+          </Pressable>
+          <Text
             style={{
               color: theme.dark ? "#fff" : "#000",
               textAlign: "center",
@@ -174,8 +180,8 @@ const renderItem=({ item }: {item : NotificationType} ) => {
         </View>
       </View>
       {isLoading ? (
-        <View style={{ padding: scale(16)}}>
-          {[0,1,2,3,4,5].map((num: number, index: number)=>(
+        <View style={{ padding: scale(16) }}>
+          {[0, 1, 2, 3, 4, 5].map((num: number, index: number) => (
             <MotiView
               transition={{
                 type: "timing",
@@ -192,41 +198,41 @@ const renderItem=({ item }: {item : NotificationType} ) => {
             >
               <Skeleton
                 colorMode={theme.dark ? "dark" : "light"}
-                radius= {"round"}
+                radius={"round"}
                 height={scale(60)}
                 width={scale(60)}
               />
-               <Skeleton
-                  colorMode={theme.dark ? "dark" : "light"}
-                  height={scale(50)}
-                  width={scale(240)}
-                />
+              <Skeleton
+                colorMode={theme.dark ? "dark" : "light"}
+                height={scale(50)}
+                width={scale(240)}
+              />
             </MotiView>
           ))}
         </View>
       ) : (
         <>
-             <View>
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            style={{ padding: scale(10)}}
-          >
-            <TouchableOpacity
-                  style={{
-                    padding: verticalScale(8),
-                    backgroundColor:
-                      active === "All"
-                        ? "#705DF2"
-                        : theme.dark
-                        ? "#3c43485c"
-                        : "#f5f5f5",
-                    borderRadius: scale(5),
-                    marginRight: scale(20),
-                  }}
-              onPress={()=>setActive("All")}
+          <View>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              style={{ padding: scale(10) }}
             >
-               <Text
+              <TouchableOpacity
+                style={{
+                  padding: verticalScale(8),
+                  backgroundColor:
+                    active === "All"
+                      ? "#705DF2"
+                      : theme.dark
+                      ? "#3c43485c"
+                      : "#f5f5f5",
+                  borderRadius: scale(5),
+                  marginRight: scale(20),
+                }}
+                onPress={() => setActive("All")}
+              >
+                <Text
                   style={{
                     color: "#fff",
                     fontFamily: "Poppins_500Medium",
@@ -234,143 +240,142 @@ const renderItem=({ item }: {item : NotificationType} ) => {
                   }}
                 >
                   All
-                </Text> 
-            </TouchableOpacity>
-            <TouchableOpacity
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  padding: verticalScale(8),
+                  backgroundColor:
+                    active === "Courses"
+                      ? "#705DF2"
+                      : theme.dark
+                      ? "#3c43485c"
+                      : "#f5f5f5",
+                  borderRadius: scale(5),
+                  marginRight: scale(20),
+                }}
+                onPress={() => setActive("Courses")}
+              >
+                <Text
                   style={{
-                    padding: verticalScale(8),
-                    backgroundColor:
-                      active === "Courses"
-                        ? "#705DF2"
-                        : theme.dark
-                        ? "#3c43485c"
-                        : "#f5f5f5",
-                    borderRadius: scale(5),
-                    marginRight: scale(20),
+                    color: theme.dark ? "#fff" : "#000",
+                    fontFamily: "Poppins_500Medium",
+                    fontSize: fontSizes.FONT18,
                   }}
-                  onPress={() => setActive("Courses")}
                 >
-                  <Text
-                    style={{
-                      color: theme.dark ? "#fff" : "#000",
-                      fontFamily: "Poppins_500Medium",
-                      fontSize: fontSizes.FONT18,
-                    }}
-                  >
-                    Courses
-                  </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+                  Courses
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  padding: verticalScale(8),
+                  backgroundColor:
+                    active === "Resources"
+                      ? "#705DF2"
+                      : theme.dark
+                      ? "#3c43485c"
+                      : "#f5f5f5",
+                  borderRadius: scale(5),
+                  marginRight: scale(20),
+                }}
+                onPress={() => setActive("Resources")}
+              >
+                <Text
                   style={{
-                    padding: verticalScale(8),
-                    backgroundColor:
-                      active === "Resources"
-                        ? "#705DF2"
-                        : theme.dark
-                        ? "#3c43485c"
-                        : "#f5f5f5",
-                    borderRadius: scale(5),
-                    marginRight: scale(20),
+                    color: theme.dark ? "#fff" : "#000",
+                    fontFamily: "Poppins_500Medium",
+                    fontSize: fontSizes.FONT18,
                   }}
-                  onPress={() => setActive("Resources")}
                 >
-                  <Text
-                    style={{
-                      color: theme.dark ? "#fff" : "#000",
-                      fontFamily: "Poppins_500Medium",
-                      fontSize: fontSizes.FONT18,
-                    }}
-                  >
-                    Resources
-                  </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+                  Resources
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  padding: verticalScale(8),
+                  backgroundColor:
+                    active === "Support Center"
+                      ? "#705DF2"
+                      : theme.dark
+                      ? "#3c43485c"
+                      : "#f5f5f5",
+                  borderRadius: scale(5),
+                  marginRight: scale(20),
+                }}
+                onPress={() => setActive("Support Center")}
+              >
+                <Text
                   style={{
-                    padding: verticalScale(8),
-                    backgroundColor:
-                      active === "Support Center"
-                        ? "#705DF2"
-                        : theme.dark
-                        ? "#3c43485c"
-                        : "#f5f5f5",
-                    borderRadius: scale(5),
-                    marginRight: scale(20),
+                    color: theme.dark ? "#fff" : "#000",
+                    fontFamily: "Poppins_500Medium",
+                    fontSize: fontSizes.FONT18,
                   }}
-                  onPress={() => setActive("Support Center")}
                 >
-                  <Text
-                    style={{
-                      color: theme.dark ? "#fff" : "#000",
-                      fontFamily: "Poppins_500Medium",
-                      fontSize: fontSizes.FONT18,
-                    }}
-                  >
-                    Support Center
-                  </Text>
-            </TouchableOpacity>
-              
-          </ScrollView>
-        </View>
+                  Support Center
+                </Text>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
 
-        <FlatList 
-          data={notificationData}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
+          <FlatList
+            data={notificationsData}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
         </>
       )}
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default NotificationScreen
+export default NotificationScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "#fff",
-        marginTop: verticalScale(2),
-      },
-      sectionHeader: {
-        fontSize: 16,
-        fontWeight: "bold",
-        color: "#333",
-        marginTop: verticalScale(8),
-        marginBottom: 5,
-      },
-      notificationItem: {
-        flexDirection: "row",
-        paddingVertical: verticalScale(5),
-        backgroundColor: "#fff",
-      },
-      notificationIcon: {
-        width: scale(30),
-        height: scale(30),
-        borderRadius: 20,
-        backgroundColor: "#FFCA28",
-        justifyContent: "center",
-        alignItems: "center",
-        marginRight: 10,
-      },
-      notificationInitial: {
-        color: "#fff",
-        fontWeight: "bold",
-        fontSize: 18,
-      },
-      notificationText: {
-        flex: 1,
-        color: "#333",
-        fontFamily: "Poppins_400Regular",
-        fontSize: fontSizes.FONT17,
-      },
-      deleteButton: {
-        backgroundColor: "red",
-        justifyContent: "center",
-        alignItems: "center",
-        width: scale(50),
-        height: "100%",
-      },
-      deleteButtonText: {
-        color: "#fff",
-        fontWeight: "bold",
-      },
-})
+  container: {
+    backgroundColor: "#fff",
+    marginTop: verticalScale(2),
+  },
+  sectionHeader: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#333",
+    marginTop: verticalScale(8),
+    marginBottom: 5,
+  },
+  notificationItem: {
+    flexDirection: "row",
+    paddingVertical: verticalScale(5),
+    backgroundColor: "#fff",
+  },
+  notificationIcon: {
+    width: scale(30),
+    height: scale(30),
+    borderRadius: 20,
+    backgroundColor: "#FFCA28",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 10,
+  },
+  notificationInitial: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  notificationText: {
+    flex: 1,
+    color: "#333",
+    fontFamily: "Poppins_400Regular",
+    fontSize: fontSizes.FONT17,
+  },
+  deleteButton: {
+    backgroundColor: "red",
+    justifyContent: "center",
+    alignItems: "center",
+    width: scale(50),
+    height: "100%",
+  },
+  deleteButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+});
