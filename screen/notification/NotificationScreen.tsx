@@ -48,7 +48,7 @@ const NotificationScreen = () => {
     useNotification();
 
   const renderItem = ({ item }: { item: NotificationType }) => (
-    <ReanimatedSwipeable
+    <Swipeable
       renderRightActions={() => (
         <Pressable style={styles.deleteButton}>
           <MaterialIcons
@@ -97,7 +97,7 @@ const NotificationScreen = () => {
               },
             ]}
           >
-            {item.title}
+            {item?.title}
           </Text>
           <Text
             style={[
@@ -107,7 +107,7 @@ const NotificationScreen = () => {
               },
             ]}
           >
-            {item.message}
+            {item?.message}
           </Text>
           <Text
             style={[
@@ -122,7 +122,7 @@ const NotificationScreen = () => {
           </Text>
         </View>
       </Pressable>
-    </ReanimatedSwipeable>
+    </Swipeable>
   );
   return (
     <SafeAreaView

@@ -25,6 +25,7 @@ import ThemeSwitcher from "@/components/common/ThemeSwitcher";
 import * as SecureStore from 'expo-secure-store';
 import { Feather, FontAwesome, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
 
 const ProfileScreen = () => {
   const { theme } = useTheme();
@@ -399,7 +400,7 @@ const ProfileScreen = () => {
             justifyContent: "space-between",
             marginBottom: verticalScale(20),
           }}
-          // onPress={() => router.push("/(routes)/settings")}
+          onPress={() => router.push("/(routes)/settings")}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View
@@ -452,11 +453,11 @@ const ProfileScreen = () => {
             justifyContent: "space-between",
             marginBottom: verticalScale(20),
           }}
-          // onPress={async () =>
-          //   await WebBrowser.openBrowserAsync(
-          //     "https://www.becodemy.com/privacy-policy"
-          //   )
-          // }
+          onPress={async () =>
+            await WebBrowser.openBrowserAsync(
+              "https://www.becodemy.com/privacy-policy"
+            )
+          }
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View
