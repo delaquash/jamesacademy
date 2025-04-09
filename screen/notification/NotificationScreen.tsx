@@ -19,22 +19,90 @@ import { MotiView } from "moti";
 import { Skeleton } from "moti/skeleton";
 import { NotificationsData } from "@/config/constants";
 import { Swipeable } from "react-native-gesture-handler";
-import { useUserData } from "@/hooks/fetch/userData";
+import { fetchUserData, useUserData } from "@/hooks/fetch/userData";
 import { useTheme } from "@/context/ThemeContext";
 import { setAuthorizationHeader, useFetchUser } from "@/hooks/fetch/fetchUserHook";
 import { fetchNotifications, useNotification } from "@/hooks/fetch/UseNotificationHooks";
 import SkeltonLoader from "@/utils/Skelton";
+
+interface RenderItemProps {
+  item: {
+    id: string,
+    title: string,
+    message: string,
+    status: string
+  }
+}
 
 const NotificationScreen = () => {
      const { theme } = useTheme();
      const [active, setActive] = useState("All")
       const { data: user, loader } = useFetchUser();
       const { data } = useUserData();
+      const { name, email, avatar } = data || {};
+      const [notificationData, setNotificationData] = useState<
+    NotificationType[]
+  >([]);
     
 // Fetch notifications from the server
-const {isLoading, notificationsData,notificationDeleteHandler} =  useNotification()
+const {isLoading, notificationsData, notificationDeleteHandler} =  useNotification()
 
-const renderItem=() => {}
+const renderItem=({ item }: RenderItemProps) => {
+  <Swipeable
+    renderRightActions={()=> {
+      <Pressable
+          style={styles.deleteButton}
+      >
+        <MaterialIcons name="delete-outline" size={scale(25)} color={"#fff"}/>
+      </Pressable>
+    }}
+  >
+    <Pressable
+      style={[styles.notificationItem, 
+        {
+          padding: scale(14),
+          paddingVertical: verticalScale(10),
+          backgroundColor: item.status === "Unread"
+              ? theme.dark 
+                ? "#3c4385c"
+                : "#f1f1f1"
+              : theme.dark 
+                ? "#101010"
+                : "#fff"
+        }
+      ]}
+    >
+        {avatar && (
+          <Image 
+              source={{ uri: user?.avatar! }}
+              width={scale(50)}
+              height={scale(50)}
+              borderRadius={scale(100)}
+              style={{ marginRight: verticalScale(8) }}
+          />
+        )}
+        <View style={{ width: scale(265)}}>
+          <Text
+            style={[styles.notificationText, {
+              fontWeight: "500",
+              fontFamily: "Poppins_500Medium",
+              fontSize: fontSizes.FONT18,
+              color: theme.dark ? "#fff" : "#000"
+            }]}
+          >
+            {item.title} 
+          </Text>
+          <Text
+            style={[styles.notificationText, {
+              color: theme.dark ? "#fff" : "#333"
+            }]}
+          >
+            {item.message}
+          </Text>
+        </View>
+    </Pressable>
+  </Swipeable>
+}
   return (
     <SafeAreaView
         style={{ flex: 1, backgroundColor: theme.dark ? "#101010" : "#fff" }}
@@ -230,7 +298,7 @@ const renderItem=() => {}
         </View>
 
         <FlatList 
-          data={notificationsData}
+          data={NotificationsData}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />

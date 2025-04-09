@@ -25,7 +25,7 @@ import { useQuery } from '@tanstack/react-query';
 import * as SecureStore from 'expo-secure-store';
 
 
-const fetchUserData = async (): Promise<UserType> => {
+export const fetchUserData = async (): Promise<UserType> => {
   const name = await SecureStore.getItemAsync('name');
   const email = await SecureStore.getItemAsync('email');
   const avatar = await SecureStore.getItemAsync('avatar');
