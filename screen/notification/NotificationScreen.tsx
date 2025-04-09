@@ -18,12 +18,14 @@ import { fontSizes } from "@/themes/app.constant";
 import { MotiView } from "moti";
 import { Skeleton } from "moti/skeleton";
 import { NotificationsData } from "@/config/constants";
-import { Swipeable } from "react-native-gesture-handler";
+// import { Swipeable } from "react-native-gesture-handler";
 import { fetchUserData, useUserData } from "@/hooks/fetch/userData";
 import { useTheme } from "@/context/ThemeContext";
+import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { setAuthorizationHeader, useFetchUser } from "@/hooks/fetch/fetchUserHook";
 import { fetchNotifications, useNotification } from "@/hooks/fetch/UseNotificationHooks";
 import SkeltonLoader from "@/utils/Skelton";
+import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 
 interface RenderItemProps {
   item: {
@@ -48,14 +50,14 @@ const NotificationScreen = () => {
 const {isLoading, notificationsData, notificationDeleteHandler} =  useNotification()
 
 const renderItem=({ item }: RenderItemProps) => {
-  <Swipeable
-    renderRightActions={()=> {
-      <Pressable
-          style={styles.deleteButton}
-      >
-        <MaterialIcons name="delete-outline" size={scale(25)} color={"#fff"}/>
-      </Pressable>
-    }}
+
+  const renderRightActions = () => (
+    <Pressable style={styles.deleteButton}>
+      <MaterialIcons name="delete-outline" size={scale(25)} color={"#fff"} />
+    </Pressable>
+  );
+  <ReanimatedSwipeable
+    renderRightActions={renderRightActions}
   >
     <Pressable
       style={[styles.notificationItem, 
@@ -101,7 +103,7 @@ const renderItem=({ item }: RenderItemProps) => {
           </Text>
         </View>
     </Pressable>
-  </Swipeable>
+  </ReanimatedSwipeable>
 }
   return (
     <SafeAreaView
