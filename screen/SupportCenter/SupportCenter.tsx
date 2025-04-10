@@ -11,7 +11,7 @@ import {
     View,
   } from "react-native";
   import React, { useState } from "react";
-  import { useTheme } from "@/context/theme.context";
+  import { useTheme } from "@/context/ThemeContext";
   import { scale, verticalScale } from "react-native-size-matters";
   import { router } from "expo-router";
   import { AntDesign } from "@expo/vector-icons";
