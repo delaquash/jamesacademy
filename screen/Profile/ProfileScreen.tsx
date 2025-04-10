@@ -29,7 +29,7 @@ import * as WebBrowser from "expo-web-browser";
 
 const ProfileScreen = () => {
   const { theme } = useTheme();
-  // const { data: user, loader } = useFetchUser();
+  const { data: user, loader } = useFetchUser();
   const { data } = useUserData();
 
   const logoutHandler = async() => {
@@ -107,7 +107,7 @@ const ProfileScreen = () => {
             end={{x: 0, y: 1}}
             colors= {["#01CDE3", "#0185F7"]}
           >
-            {/* <Text style={styles.statNumber}>{user?.orders?.length}</Text> */}
+            <Text style={styles.statNumber}>{user?.orders?.length}</Text>
             <Text style={styles.statLabel}>Enrolled</Text>
           </LinearGradient>
           <LinearGradient
@@ -242,7 +242,7 @@ const ProfileScreen = () => {
             justifyContent: "space-between",
             marginBottom: verticalScale(20),
           }}
-          // onPress={() => router.push("/(routes)/my-tickets")}
+          onPress={() => router.push("/(routes)/my-tickets")}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View
@@ -295,7 +295,7 @@ const ProfileScreen = () => {
             justifyContent: "space-between",
             marginBottom: verticalScale(20),
           }}
-          // onPress={() => router.push("/(routes)/support-center")}
+          onPress={() => router.push("/(routes)/support")}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View

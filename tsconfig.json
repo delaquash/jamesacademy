@@ -18,5 +18,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-  ]
+, "assets/svg/onboarding/1.jsx", "assets/svg/onboarding/2.jsx"  ]
 }
