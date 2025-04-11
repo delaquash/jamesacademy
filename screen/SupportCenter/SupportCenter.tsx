@@ -106,7 +106,7 @@ const SupportCenter = () => {
                     flexDirection: "row",
                     gap: scale(10),
                 }}
-                // onPress={()=>}
+                onPress={()=>setOpen(true)}
             >
                 <IconOne />
                 <View>
@@ -193,7 +193,7 @@ const SupportCenter = () => {
             flexDirection: "row",
             gap: scale(10),
           }}
-          onPress={() => Linking.openURL("mailto:support@becodemy.com")}
+          onPress={() => Linking.openURL("mailto:olaide1191@gmail.com")}
         >
           <IconThree />
           <View>
@@ -219,6 +219,47 @@ const SupportCenter = () => {
           </View>
         </Pressable>
       </View>-
+
+      {open && (
+        <Modal 
+          animationType="fade"
+          transparent={true}
+          visible={open}
+          onRequestClose={() => setOpen(false)}
+        >
+          <Pressable
+            style={{ flex: 1 }}
+            onPress={() => setOpen(false)}
+          >
+            <BlurView
+            intensity={ 90 }
+              style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+            >
+              <Pressable
+                onPress={(e)=> e.stopPropagation()}
+                style={{
+                  width: scale(300),
+                  marginHorizontal: scale(50),
+                  backgroundColor: theme.dark ? "#101010" : "#fff",
+                  borderRadius: scale(10),
+                  padding: scale(15),
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: fontSizes.FONT35,
+                    textAlign: "center",
+                    fontFamily: "Poppins_600SemiBold",
+                    color: theme.dark ? "#fff" : "#000",
+                  }}
+                >
+                  Create a ticket
+                </Text>
+              </Pressable>
+            </BlurView>
+          </Pressable>
+        </Modal>
+      )}
     </ScrollView>
   )
 }
