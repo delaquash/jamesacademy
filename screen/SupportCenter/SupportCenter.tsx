@@ -284,6 +284,63 @@ const SupportCenter = () => {
 
                   />
                 </View>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: fontSizes.FONT20,
+                      fontFamily: "Poppins_500Medium",
+                      color: theme.dark ? "#fff" : "#000",
+                      paddingTop: verticalScale(10),
+                    }}
+                  >
+                    Ticket Description *
+                  </Text>
+                  <TextInput
+                    placeholder="Problem explaination with details..."
+                    multiline={true}
+                    numberOfLines={6}
+                    value={ticketDescription}
+                    onChangeText={(e) => setTicketDescription(e)}
+                    style={{
+                      height: verticalScale(80),
+                      borderWidth: 1,
+                      borderColor: theme.dark ? "#fff" : "#333",
+                      marginVertical: verticalScale(5),
+                      color: theme.dark ? "#fff" : "#000",
+                      paddingLeft: scale(10),
+                      paddingTop: verticalScale(5),
+                      fontSize: fontSizes.FONT18,
+                      borderRadius: scale(5),
+                      textAlignVertical: "top",
+                    }}
+                    placeholderTextColor={theme.dark ? "#fff" : "#000"}
+                  />
+                </View>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "#2467EC",
+                    paddingVertical: verticalScale(8),
+                    borderRadius: scale(8),
+                    marginTop: verticalScale(15)
+                  }}
+                  // onPress={()=> }
+                >
+                  {loader ?  (
+                    <ActivityIndicator size={"small"} />
+                  ) : (
+                    <Text
+                    style={{
+                      textAlign: "center",
+                      color: "#FFFF",
+                      fontSize: fontSizes.FONT22,
+                      fontFamily: "Poppins_600SemiBold",
+                    }}
+                  >
+                    Create
+
+                    </Text>
+                  )}
+                </TouchableOpacity>
               </Pressable>
             </BlurView>
           </Pressable>
