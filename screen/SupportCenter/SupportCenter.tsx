@@ -28,7 +28,7 @@ import  { setAuthorizationHeader, useFetchUser } from "@/hooks/fetch/fetchUserHo
 const SupportCenter = () => {
     const { theme } = useTheme()
     const [open, setOpen] = useState(false)
-    const [ticketTitile, setTicketTitile] = useState("")
+    const [ticketTitle, setTicketTitle] = useState("")
     const [ticketDescription, setTicketDescription] = useState("")
     const [loader, setLoader] = useState(false)
   return (
@@ -255,6 +255,35 @@ const SupportCenter = () => {
                 >
                   Create a ticket
                 </Text>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: fontSizes.FONT20,
+                      fontFamily: "Poppins_500Medium",
+                      color: theme.dark ? "#fff" : "#333",
+                      paddingTop: verticalScale(5),
+                    }}
+                  >
+                    Ticket Title *
+                  </Text>
+                  <TextInput
+                      placeholder="I am encountering a problem"
+                      placeholderTextColor={theme.dark ? "#fff" : "#333"}
+                      style={{
+                        height: verticalScale(30),
+                        borderWidth: 1,
+                        borderColor: theme.dark ? "#fff" : "#000",
+                        marginVertical: verticalScale(5),
+                        color: theme.dark ? "#fff" : "#000",
+                        paddingLeft: scale(10),
+                        fontSize: fontSizes.FONT18,
+                        borderRadius: scale(5),
+                      }}
+                      value={ticketTitle}
+                      onChangeText={(e)=>setTicketTitle(e)}
+
+                  />
+                </View>
               </Pressable>
             </BlurView>
           </Pressable>
