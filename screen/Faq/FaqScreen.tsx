@@ -19,6 +19,10 @@ import {
 const FaqScreen = () => {
     const { theme } = useTheme();
     const [activeQuestion, setActiveQuestion] = useState(null)
+
+    const toggleQuestion = (id: any) => {
+        setActiveQuestion(activeQuestion === id ? null : id)
+    }
   return (
     <View style={{ flex: 1, backgroundColor: theme.dark ? "#101010" : "#fff"}}>
         <LinearGradient
@@ -85,6 +89,75 @@ const FaqScreen = () => {
             placeholder="Search for Topics!"
             placeholderTextColor={theme.dark ? "#D9D9D9" : "#000"}
           />
+        </View>
+        <View style={{ paddingTop: scale(10)}}>
+            <FlatList 
+                data={FAQData}
+                renderItem={({ item}) => (
+                    <View
+                        key={item.id}
+                        style={{ 
+                            width: scale(310),
+                            backgroundColor: theme.dark ? "#3c43485c" : "#eaf3fb85",
+                            marginVertical: verticalScale(8),
+                            borderRadius: scale(10),
+                            paddingVertical: scale(8),
+                            paddingHorizontal: scale(10),
+                        }}
+                    >
+                        <View
+                           style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: theme.dark ? "#fff" : "#000",
+                              fontSize: fontSizes.FONT20,
+                              fontFamily: "Poppins_500Medium",
+                              width: scale(260),
+                            }}
+                          >
+                            {item.question}
+                            </Text>
+                            <View style={{ paddingRight: scale(5) }}>
+                                <Pressable
+                                    onPress={() => toggleQuestion(item.id)}
+                                >
+                                    {activeQuestion === item.id ? (
+                                        <AntDesign 
+                                            name="up"
+                                            size={scale(20)}
+                                            color={theme.dark ?  "#fff" : "#000"}
+                                        />
+                                    ) : (
+                                        <AntDesign 
+                                            name="down"
+                                            size={scale(10)}
+                                            color={theme.dark ?  "#fff" : "#000"}
+                                        
+                                        />
+                                    )}
+                                </Pressable>
+                            </View>
+                        </View>
+                        {activeQuestion === item.id && (
+                                <Text
+                                    style={{
+                                        color: theme.dark ? "#fff" : "#000",
+                                        fontSize: fontSizes.FONT18,
+                                        fontFamily: "Poppins_400Regular",
+                                        width: scale(260),
+                                        paddingTop: verticalScale(5),
+                                      }}
+                                >
+                                    {item.answer}
+                                </Text>
+                        )}
+                    </View>
+                )}
+            />
         </View>
       </View>
       {/*  */}
