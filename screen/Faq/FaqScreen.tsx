@@ -160,7 +160,6 @@ const FaqScreen = () => {
             />
         </View>
       </View>
-      {/*  */}
     </View>
   )
 }

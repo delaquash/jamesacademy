@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import MyTicketScreen from '@/screen/MyTickets/MyTicketScreen'
 
 const index = () => {
   return (
-    <View>
-      <Text>index</Text>
-    </View>
+    <MyTicketScreen />
   )
 }
 
