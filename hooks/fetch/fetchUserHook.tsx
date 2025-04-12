@@ -2,12 +2,6 @@ import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
-interface IUser {
-  name: string;
-  email: string;
-  avatar: string;
-}
-
 /**
  * Function to set the Authorization header for Axios requests.
  * Ensures every request includes the stored token.

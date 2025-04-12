@@ -22,7 +22,7 @@ import * as SecureStore from 'expo-secure-store';
 // }
 
 
-const getUserSession = async () => {
+const getUserSession = async ():Promise<UserType>=> {
   const [name, email, avatar] = await Promise.all([
     SecureStore.getItemAsync("name"),
     SecureStore.getItemAsync("email"),
