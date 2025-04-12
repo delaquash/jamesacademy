@@ -19,7 +19,7 @@ import { MotiView } from "moti";
 import { Skeleton } from "moti/skeleton";
 import { NotificationsData } from "@/config/constants";
 // import { Swipeable } from "react-native-gesture-handler";
-import { fetchUserData, useUserData } from "@/hooks/fetch/userData";
+import { useUserData } from "@/hooks/fetch/userData";
 import { useTheme } from "@/context/ThemeContext";
 import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import {
