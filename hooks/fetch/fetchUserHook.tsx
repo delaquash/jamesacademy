@@ -35,9 +35,10 @@ const fetchUserData = async ():Promise<UserType> => {
 /**
  * Custom hook to fetch and manage user data using React Query.
  */
+// Also as useUser
 export const useFetchUser = () => {
   // useQuery: Fetches user data and caches it.
-  const { data, isLoading: loader, isError, refetch } = useQuery({
+  const { data: user, isLoading: loader, isError, refetch } = useQuery({
     queryKey: ["user"], // Unique key for caching
     queryFn: fetchUserData, // Function to fetch data
     retry: 2, // Number of retries on failure
@@ -52,7 +53,7 @@ export const useFetchUser = () => {
   });
 
   return {
-    data, // Fetched user data
+    user, // Fetched user data
     error, // Error from mutation
     loader, // Loading state
     isError, // Error state

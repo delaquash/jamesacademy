@@ -16,7 +16,7 @@ const getUserSession = async ():Promise<UserType>=> {
   };
 };
 
-export default function useUserData() {
+export const useUserData=()=> {
   const { data: user, isLoading, isError } = useQuery({
     queryKey: ["userData"],
     queryFn: getUserSession,
@@ -26,6 +26,7 @@ export default function useUserData() {
     name: user?.name ?? "",
     email: user?.email ?? "",
     avatar: user?.avatar ?? "",
+    user,
     isLoading,
     isError,
   };

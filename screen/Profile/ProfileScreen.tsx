@@ -29,8 +29,8 @@ import * as WebBrowser from "expo-web-browser";
 
 const ProfileScreen = () => {
   const { theme } = useTheme();
-  const { data: user, loader } = useFetchUser();
-  const { data } = useUserData();
+  const { user, loader } = useFetchUser();
+  const { user: data } = useUserData();
 
   const logoutHandler = async() => {
     await SecureStore.deleteItemAsync("accessToken")
