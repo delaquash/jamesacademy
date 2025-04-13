@@ -214,7 +214,7 @@ const NotificationScreen = () => {
       ) : (
         <>
           <View>
-            <ScrollView
+            <View
               horizontal={true}
               showsHorizontalScrollIndicator={false}
               style={{ padding: scale(10) }}
@@ -315,7 +315,7 @@ const NotificationScreen = () => {
                   Support Center
                 </Text>
               </TouchableOpacity>
-            </ScrollView>
+            </View>
           </View>
 
           <FlatList
