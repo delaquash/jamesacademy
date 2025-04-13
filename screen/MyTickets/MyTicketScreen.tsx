@@ -6,14 +6,18 @@ import IconSix from "@/assets/svg/support-center/six";
 import { fontSizes } from "@/themes/app.constant";
 import { AntDesign } from "@expo/vector-icons";
 import { router } from "expo-router";
-import useUserData from "@/hooks/fetch/userData";
+import { useUserData} from "@/hooks/fetch/userData";
 
 const MyTicketScreen = () => {
     const { theme } = useTheme();
-    const {   } = useUserData()
+    const { user } = useUserData()
   return (
-    <View>
-      <Text>MyTicketScreen</Text>
+    <View style={{ flex: 1, backgroundColor: theme.dark ? "#101010" : "#fff" }}>
+      <View
+        
+      >
+
+      </View>
     </View>
   )
 }

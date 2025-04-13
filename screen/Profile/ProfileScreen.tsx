@@ -32,6 +32,7 @@ const ProfileScreen = () => {
   const { user, loader } = useFetchUser();
   const { user: data } = useUserData();
 
+
   const logoutHandler = async() => {
     await SecureStore.deleteItemAsync("accessToken")
     router.push("/(routes)/onboarding")

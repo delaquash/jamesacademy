@@ -37,8 +37,9 @@ const NotificationScreen = () => {
   const { theme } = useTheme();
   const [active, setActive] = useState("All");
   const { user, loader } = useFetchUser();
-  const { data } = useUserData();
-  const { name, email, avatar } = data || {};
+  const { user: data } = useUserData();
+  const avatar = user?.avatar || data?.avatar;
+
   const [notificationData, setNotificationData] = useState<NotificationType[]>(
     []
   );
@@ -78,7 +79,7 @@ const NotificationScreen = () => {
       >
         {avatar && (
           <Image
-            source={{ uri: user?.avatar! }}
+            source={{ uri: data?.avatar! }}
             width={scale(50)}
             height={scale(50)}
             borderRadius={scale(100)}
