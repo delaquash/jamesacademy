@@ -226,6 +226,13 @@ const authHandler = async({ name, email, avatar }: AuthHandlerProps) => {
     );
     console.log("This is response from the backend", response)
     // Rest of the code...
+    await SecureStore.setItemAsync("accessToken", response.data.accessToken)
+    await SecureStore.setItemAsync("name", name!)
+    await SecureStore.setItemAsync("email", email!)
+    await SecureStore.setItemAsync("avatar", avatar!)
+    setModalVisible(false);
+    router.push("/(tabs)");
+
   } catch (error: any) {
     console.error("Authentication error details:", error.message);
     if (error.code === 'ECONNABORTED') {

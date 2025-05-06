@@ -12,7 +12,7 @@ import SkeltonLoader from '@/utils/Skelton'
 
 const HomeScreen = () => {
   const { theme } = useTheme()
-  const [ loading, setLoading ] = useState(true)
+  const [ loading, setLoading ] = useState(false)
   return (
     <>
       <LinearGradient
