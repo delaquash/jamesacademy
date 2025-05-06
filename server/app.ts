@@ -3,6 +3,7 @@ dotenv.config();
 import express, { Request, Response, NextFunction } from "express";
 
 import userRoutes from "./route/UserRoute.js";
+import courseRoutes from "./route/CourseRoute.js";
 // import { errorHandler } from "./middleware/errorHandler";
 import { CustomError } from "./utils/CustomError.js";
 
@@ -13,6 +14,7 @@ app.use(express.json({ limit: "100mb" }));
 
 // routes
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/course", courseRoutes);
 // app.use("/api/v1/driver", driverRoutes);
 
 // testing route
