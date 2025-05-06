@@ -12,7 +12,7 @@ import { useTheme } from '@/context/ThemeContext';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { verticalScale } from "react-native-size-matters";
 import { videoLessonsData } from "@/config/constants";
-import SourceCodeCard from "@/components/card/SourceCodeCard";
+import SourceCodeCard from "@/components/card/SourceCodeCard"; 
 
 const ResourceScreen = () => {
     const { theme } = useTheme()
