@@ -179,7 +179,7 @@ const NotificationScreen = () => {
             Notifications
           </Text>
         </View>
-      </View>
+      
       {isLoading ? (
         <View style={{ padding: scale(16) }}>
           {[0, 1, 2, 3, 4, 5].map((num: number, index: number) => (
@@ -214,12 +214,12 @@ const NotificationScreen = () => {
       ) : (
         <>
           <View>
-            <View
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              style={{ padding: scale(10) }}
-            >
-              <TouchableOpacity
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                style={{ padding: scale(10) }}
+              >
+                     <TouchableOpacity
                 style={{
                   padding: verticalScale(8),
                   backgroundColor:
@@ -315,7 +315,8 @@ const NotificationScreen = () => {
                   Support Center
                 </Text>
               </TouchableOpacity>
-            </View>
+              </ScrollView>
+            
           </View>
 
           <FlatList
@@ -325,6 +326,7 @@ const NotificationScreen = () => {
           />
         </>
       )}
+      </View>
     </SafeAreaView>
   );
 };
