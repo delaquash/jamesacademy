@@ -1,28 +1,29 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const fetchCourse = async ({ queryKey }: { queryKey: [string, { isProfile: boolean }] }) => {
-    const [_key, { isProfile }] = queryKey;
+const fetchCourse = async ({ queryKey }) => {
+  const [_key, { isProfile }] = queryKey;
   
-    const endpoint = isProfile
-      ? `${process.env.EXPO_PUBLIC_SERVER_URI}/course/get-profile-courses`
-      : `${process.env.EXPO_PUBLIC_SERVER_URI}/course/get-courses`;
+  // Using a single endpoint but passing isProfile as a query parameter
+  const endpoint = `${process.env.EXPO_PUBLIC_SERVER_URI}/course/get-courses`;
   
-    const res = await axios.get(endpoint);
-    return res.data.courses;
-  };
+  const res = await axios.get(endpoint, { 
+    params: { isProfile } 
+  });
   
-
-export const fetchCourseHook = (isProfile: boolean) => {
-    const { data: course, isLoading, error} = useQuery({
+  return res.data.courses;
+};
+  
+export const fetchCourseHook = (isProfile = false) => {
+  const { data: course, isLoading, error } = useQuery({
     queryKey: ["course", { isProfile }],
-        queryFn: fetchCourse,
-        retry: 3,
-    });
+    queryFn: fetchCourse,
+    retry: 3,
+  });
 
-    return {
-        course,
-        error,
-        isLoading,
-    };
+  return {
+    course,
+    isLoading,
+    error,
+  };
 };

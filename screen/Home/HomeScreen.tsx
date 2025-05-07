@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native'
 import React, { useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useTheme } from '@/context/ThemeContext'
@@ -8,11 +8,12 @@ import { fontSizes, windowHeight, windowWidth } from '@/themes/app.constant'
 import { scale, verticalScale } from 'react-native-size-matters'
 import GradientText from '@/components/common/GradientText'
 import SkeltonLoader from '@/utils/Skelton'
-
+import { fetchCourseHook } from '@/hooks/fetch/fetchCourse'
+import CourseCard from '@/components/card/CourseCard'
 
 const HomeScreen = () => {
   const { theme } = useTheme()
-  const [ loading, setLoading ] = useState(false)
+  const {course, isLoading} = fetchCourseHook(false)
   return (
     <>
       <LinearGradient
@@ -80,11 +81,19 @@ const HomeScreen = () => {
                       </Text>
                   </View>
               </View>
-              {loading ? (
+              {isLoading ? (
                 <>
                   <SkeltonLoader />
                 </>
-              ) :( <View></View>)}
+              ) :( 
+              <View>
+                <FlatList 
+                  data={course}
+                  keyExtractor={(item) => item.id}
+                  renderItem={({ item }) => <CourseCard item={item} />}
+                  ListEmptyComponent={<Text> No courses available yet</Text>}
+                />
+              </View>)}
           </View>
       </ScrollView>
     </LinearGradient>
