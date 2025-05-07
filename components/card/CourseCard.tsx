@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View, Pressable, Image } from 'react-native'
 import React from 'react'
-import { IsAndroid, SCREEN_WIDTH, windowHeight, windowWidth } from '@/themes/app.constant'
+import { fontSizes, IsAndroid, SCREEN_WIDTH, windowHeight, windowWidth } from '@/themes/app.constant'
 import { useTheme } from '@/context/ThemeContext'
-
+import { Feather } from '@expo/vector-icons'
+import { scale } from 'react-native-size-matters'
+Ratings
 const CourseCard = ({ item }: {item: CourseType}) => {
   const { theme } = useTheme()
   return (
@@ -33,8 +35,90 @@ const CourseCard = ({ item }: {item: CourseType}) => {
             borderRadius: windowWidth(10),
           }}
         />
-
-    </View>
+      <View
+          style={{
+            paddingHorizontal: windowWidth(15),
+            paddingBottom: windowHeight(5),
+          }}
+        >
+          <Text
+            style={{
+              paddingTop: windowHeight(5),
+              fontFamily: "Poppins_400Regular",
+              fontSize: fontSizes.FONT18,
+              color: theme.dark ? "#fff" : "#3E3B54",
+            }}
+          >
+            {item.name}
+          </Text>
+          <View
+            style={{
+              paddingVertical: windowHeight(5),
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Ratings rating={item.ratings} />
+            <Text
+              style={{
+                fontFamily: "Poppins_400Regular",
+                color: !theme.dark ? "#3E3B54" : "#fff",
+                fontSize: fontSizes.FONT18,
+              }}
+            >
+              {item?.purchased} Students
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingBottom: windowHeight(5),
+            }}
+          >
+            <View style={{ flexDirection: "row" }}>
+              <Text
+                style={{
+                  fontFamily: "Poppins_400Regular",
+                  fontSize: fontSizes.FONT20,
+                  color: !theme.dark ? "#000" : "#fff",
+                }}
+              >
+                {item.price === 0 ? "Free" : item.price + "$"}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "Poppins_400Regular",
+                  fontSize: fontSizes.FONT20,
+                  paddingLeft: windowWidth(5),
+                  marginTop: windowHeight(-5),
+                  textDecorationLine: "line-through",
+                  color: !theme.dark ? "#3E3B54" : "#fff",
+                }}
+              >
+                {item.estimatedPrice}$
+              </Text>
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Feather
+                name="list"
+                size={scale(20)}
+                color={theme.dark ? "#fff" : "#3E3B54"}
+              />
+              <Text
+                style={{
+                  fontFamily: "Poppins_400Regular",
+                  fontSize: fontSizes.FONT20,
+                  color: !theme.dark ? "#3E3B54" : "#fff",
+                  paddingLeft: windowWidth(5),
+                }}
+              >
+                {item?.courseData?.length} Lectures
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
    </Pressable>
   )
 }
