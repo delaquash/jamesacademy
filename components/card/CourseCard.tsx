@@ -4,7 +4,8 @@ import { fontSizes, IsAndroid, SCREEN_WIDTH, windowHeight, windowWidth } from '@
 import { useTheme } from '@/context/ThemeContext'
 import { Feather } from '@expo/vector-icons'
 import { scale } from 'react-native-size-matters'
-Ratings
+import Ratings from '@/utils/Ratings'
+
 const CourseCard = ({ item }: {item: CourseType}) => {
   const { theme } = useTheme()
   return (
