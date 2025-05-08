@@ -4,16 +4,18 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { useTheme } from '@/context/ThemeContext'
 import WelcomeHeader from '@/components/home/WelcomeHeader'
 import HomeBanner from '@/components/home/HomeBanner'
-import { fontSizes, windowHeight, windowWidth } from '@/themes/app.constant'
+import { fontSizes, IsAndroid, windowHeight, windowWidth } from '@/themes/app.constant'
 import { scale, verticalScale } from 'react-native-size-matters'
 import GradientText from '@/components/common/GradientText'
 import SkeltonLoader from '@/utils/Skelton'
 import { fetchCourseHook } from '@/hooks/fetch/fetchCourse'
 import CourseCard from '@/components/card/CourseCard'
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 
 const HomeScreen = () => {
   const { theme } = useTheme()
   const {course, isLoading} = fetchCourseHook(false)
+  const bottomTabBarHeight = useBottomTabBarHeight();
   return (
     <>
       <LinearGradient
@@ -86,7 +88,17 @@ const HomeScreen = () => {
                   <SkeltonLoader />
                 </>
               ) :( 
-              <View>
+              <View
+                style={{
+                  paddingBottom: theme.dark 
+                    ? bottomTabBarHeight * 10
+                    : IsAndroid 
+                    ? bottomTabBarHeight * 10
+                    : 0,
+                  paddingHorizontal: scale(8)
+                }}
+              
+              >
                 <FlatList 
                   data={course}
                   keyExtractor={(item) => item.id}
