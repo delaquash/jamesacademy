@@ -5,11 +5,27 @@ import { useTheme } from '@/context/ThemeContext'
 import { Feather } from '@expo/vector-icons'
 import { scale } from 'react-native-size-matters'
 import Ratings from '@/utils/Ratings'
+import { useRouter } from 'expo-router'
 
 const CourseCard = ({ item }: {item: CourseType}) => {
   const { theme } = useTheme()
+  const router = useRouter()
+
+  const handleNavigation = () => {
+    router.push({
+      pathname: "/(routes)/course-details/index",
+      params: {
+        ...(item as any),
+        prerequisites: JSON.stringify(item.prerequisites),
+        courseContent: JSON.stringify(item.courseData),
+        benefits: JSON.stringify(item.benefits)
+        // Add other necessary primitive values
+      }
+    });
+  };
   return (
    <Pressable
+   onPress={handleNavigation}
       style={{ paddingHorizontal: windowWidth(5), paddingVertical: windowHeight(5)}}
    >
     <View
