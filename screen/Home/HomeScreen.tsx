@@ -15,102 +15,112 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 const HomeScreen = () => {
   const { theme } = useTheme()
   const {course, isLoading} = fetchCourseHook(false)
-  const bottomTabBarHeight = useBottomTabBarHeight();
   return (
     <>
       <LinearGradient
-      colors={theme.dark ? ['#180D41', "#2A2D32", "#131313"] : ["#fff", "#f7f7f7"]}
-      start={{ x: 0, y:0}}
-      end={{ x: 0, y:1 }}
-      style={{
-        flex: 1,
-        paddingTop: windowHeight(10), 
-        backgroundColor: theme.dark ? "#101010" : "#fff"
-      }}
-    >
-      <View style={{ marginBottom: verticalScale(10)}}>
+        colors={
+          theme.dark ? ["#180D41", "#2A2D32", "#131313"] : ["#fff", "#f7f7f7"]
+        }
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
+        style={{
+          flex: 1,
+          backgroundColor: theme.dark ? "#101010" : "#fff",
+        }}
+      >
         <WelcomeHeader />
-      </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <HomeBanner />
-          <View
-            style={{
-              marginHorizontal: windowWidth(20),
-              marginTop: verticalScale(-25)
-            }}
-          >
+        <View style={{ flex: 1 }}>
+          {isLoading ? (
+            <>
+              <SkeltonLoader />
+              <SkeltonLoader />
+            </>
+          ) : (
             <View
               style={{
-                flexDirection: "row",
-                marginTop: windowHeight(5)
+                paddingHorizontal: scale(8),
               }}
             >
-                <Text
-                  style={{
-                    fontSize: fontSizes.FONT35,
-                    fontFamily: "Poppins_500Medium",
-                    color: theme.dark ? "#fff" : "#000"
-                  }}
-                >
-                  Popular {"  "}
-                </Text>
-                <GradientText 
-                  text="Courses"
-                  styles={{
-                    fontSize: fontSizes.FONT35,
-                    fontFamily: "Poppins_500Medium",
-                    paddingLeft: scale(5)
-                  }}
-                />
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <View
-                    style={{
-                      backgroundColor: "#12BB70",
-                      width: windowWidth(15),
-                      height: windowWidth(15),
-                      borderRadius: 100,
-                    }}
-                  />
-                      <Text
+              <FlatList
+                ListHeaderComponent={() => (
+                  <>
+                    <HomeBanner />
+                    <View
+                      style={{
+                        marginHorizontal: windowWidth(20),
+                        marginTop: verticalScale(-25),
+                      }}
+                    >
+                      <View
                         style={{
-                          fontFamily: "Poppins_400Regular",
-                          fontSize: fontSizes.FONT18,
-                          paddingLeft: windowWidth(5),
-                          color: theme.dark ? "#fff" : "#000",
+                          flexDirection: "row",
+                          marginTop: windowHeight(5),
                         }}
                       >
-                          Our comprehensive project based courses
-                      </Text>
-                  </View>
-              </View>
-              {isLoading ? (
-                <>
-                  <SkeltonLoader />
-                </>
-              ) :( 
-              <View
-                style={{
-                  paddingBottom: theme.dark 
-                    ? bottomTabBarHeight * 10
-                    : IsAndroid 
-                    ? bottomTabBarHeight * 10
-                    : 0,
-                  paddingHorizontal: scale(8)
-                }}
-              
-              >
-                <FlatList 
-                  data={course}
-                  keyExtractor={(item) => item.id}
-                  renderItem={({ item }) => <CourseCard item={item} />}
-                  ListEmptyComponent={<Text> No courses available yet</Text>}
-                />
-              </View>)}
-          </View>
-      </ScrollView>
-    </LinearGradient>
+                        <Text
+                          style={{
+                            fontSize: fontSizes.FONT35,
+                            fontFamily: "Poppins_500Medium",
+                            color: theme.dark ? "#fff" : "#000",
+                          }}
+                        >
+                          Popular
+                        </Text>
+                        <GradientText
+                          text="Courses"
+                          styles={{
+                            fontSize: fontSizes.FONT35,
+                            fontFamily: "Poppins_500Medium",
+                            paddingLeft: scale(5),
+                          }}
+                        />
+                      </View>
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <View
+                          style={{
+                            backgroundColor: "#12BB70",
+                            width: windowWidth(15),
+                            height: windowWidth(15),
+                            borderRadius: 100,
+                          }}
+                        />
+                        <Text
+                          style={{
+                            fontFamily: "Poppins_400Regular",
+                            fontSize: fontSizes.FONT18,
+                            paddingLeft: windowWidth(5),
+                            color: theme.dark ? "#fff" : "#000",
+                          }}
+                        >
+                          our comprehensive project based courses
+                        </Text>
+                      </View>
+                    </View>
+                  </>
+                )}
+                data={course}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => <CourseCard item={item} />}
+                ListEmptyComponent={<Text>No courses Available yet!</Text>}
+                ListFooterComponent={() => (
+                  <View
+                    style={{
+                      height: theme.dark
+                        ? verticalScale(60)
+                        : verticalScale(10),
+                    }}
+                  ></View>
+                )}
+              />
+            </View>
+          )}
+        </View>
+      </LinearGradient>
     </>
-  )
+  );
 }
 
 export default HomeScreen
