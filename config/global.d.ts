@@ -60,14 +60,6 @@ type onBoardingSlidesTypes = {
     updatedAt: Date;
   };
   
-  type BenefitsType = {
-    id: string;
-    title: string;
-    courseId: string;
-    createdAt: any;
-    updatedAt: any;
-  };
-  
   type QuestionType = {
     id: string;
     userId: string;
@@ -80,17 +72,7 @@ type onBoardingSlidesTypes = {
     updatedAt: Date;
   };
   
-  type QuestionType = {
-    id: string;
-    userId: string;
-    user: UserType;
-    contentId: string;
-    question: string;
-    image?: string;
-    answers: AnswerType[];
-    createdAt: Date;
-    updatedAt: Date;
-  };
+
   
   type CourseDataType = {
     id: string;
@@ -166,3 +148,12 @@ type onBoardingSlidesTypes = {
     createdAt: any;
     updatedAt: any;
   };
+
+
+  type BenefitsType = {
+    id: string;
+    title: string;
+    courseId: string;
+    createdAt: any;
+    updatedAt: any;
+  }
