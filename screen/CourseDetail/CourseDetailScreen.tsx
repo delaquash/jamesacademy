@@ -4,7 +4,8 @@ import { useLocalSearchParams } from 'expo-router'
 import { useUserData } from '@/hooks/fetch/userData';
 import { useTheme } from '@/context/ThemeContext'
 import { fontSizes, IsAndroid, IsIPAD, SCREEN_WIDTH, windowHeight, windowWidth } from '@/themes/app.constant'
-import { verticalScale } from 'react-native-size-matters';
+import { scale, verticalScale } from 'react-native-size-matters';
+import { Ionicons } from '@expo/vector-icons';
 const CourseDetailScreen = () => {
     const { theme } = useTheme()
     const params: any = useLocalSearchParams()
@@ -96,6 +97,85 @@ const CourseDetailScreen = () => {
               {courseData?.purchased} Students
             </Text>
           </View>
+          {/* Course Prerequisites */}
+          <View style={{ paddingTop: windowWidth(20) }}>
+          <Text
+              style={{
+                fontSize: fontSizes.FONT24,
+                fontFamily: "Poppins_600SemiBold",
+                paddingTop: windowHeight(8),
+                color: theme.dark ? "#fff" : "#3E3B54",
+                lineHeight: windowHeight(20),
+              }}
+            >
+              Course Prerequisites
+            </Text>
+            {prerequisites?.map((item: BenefitsType, index: number) => (
+                    <View
+                    key={index}
+                    style={{
+                      flexDirection: "row",
+                      paddingVertical: windowHeight(5),
+                    }}
+                  >
+                    <Ionicons
+                      name="checkmark-done-outline"
+                      size={scale(17)}
+                      color={theme.dark ? "#fff" : "#000"}
+                    />
+                    <Text
+                      style={{
+                        marginLeft: windowWidth(5),
+                        fontSize: fontSizes.FONT18,
+                        color: theme.dark ? "#fff" : "#000",
+                      }}
+                    >
+                      {item?.title}
+                    </Text>
+                  </View>
+            ))}
+          </View>
+          {/* Course Benefits */}
+          <View style={{ paddingTop: windowWidth(20) }}>
+          <Text
+              style={{
+                fontSize: fontSizes.FONT24,
+                fontFamily: "Poppins_600SemiBold",
+                paddingTop: windowHeight(8),
+                color: theme.dark ? "#fff" : "#3E3B54",
+                lineHeight: windowHeight(20),
+              }}
+            >
+              Course Benefits
+            </Text>
+            {benefits.map((benefit: BenefitsType, index: number) => (
+                 <View
+                 key={index}
+                 style={{
+                   flexDirection: "row",
+                   paddingVertical: windowHeight(5),
+                 }}
+               >
+                 <Ionicons
+                   name="checkmark-done-outline"
+                   size={scale(17)}
+                   color={theme.dark ? "#fff" : "#000"}
+                 />
+                 <Text
+                   style={{
+                     marginLeft: windowWidth(5),
+                     fontSize: fontSizes.FONT18,
+                     color: theme.dark ? "#fff" : "#000",
+                   }}
+                 >
+                   {benefit?.title}
+                 </Text>
+               </View>
+                
+            ))}
+          </View>
+          {/* Course Tabs */}
+          
                 </View>
             </ScrollView>
         </View>
