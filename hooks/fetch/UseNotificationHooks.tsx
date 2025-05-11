@@ -1,53 +1,100 @@
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { setAuthorizationHeader } from "./fetchUserHook";
+import { useState, useEffect } from "react";
+import { setAuthorizationHeader } from "./fetchUserHook"; // Adjust import path as needed
 
-
-export const fetchNotifications = async () => {
-  await setAuthorizationHeader(); // Set the auth token in headers
-  const res = await axios.get(`${process.env.EXPO_PUBLIC_SERVER_URI}/get-notification`);
-  return res.data.notification; // Return the array of notifications
+// Define notification type if not already defined elsewhere
+type NotificationType = {
+  id: string | number;
+  // Add other notification properties as needed
 };
 
-// Delete a specific notification by its ID
+/**
+ * Fetches all notifications
+ */
+export const fetchNotifications = async (): Promise<NotificationType[]> => {
+  try {
+    await setAuthorizationHeader();
+    const endpoint = `${process.env.EXPO_PUBLIC_SERVER_URI}/get-notification`;
+    const res = await axios.get(endpoint, { timeout: 10000 });
+    
+    if (res.data?.notification) {
+      return res.data.notification;
+    } else {
+      return []; // Return empty array if no notifications
+    }
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+    throw error;
+  }
+};
+
+/**
+ * Deletes a specific notification
+ */
 const deleteNotification = async (notification: NotificationType) => {
-  await setAuthorizationHeader(); // Set the auth token in headers
-  const res = await axios.delete(
-    `${process.env.EXPO_PUBLIC_SERVER_URI}/delete-notification/${notification.id}`
-  );
-  return res.data.notification; // Return deleted notification or message
+  try {
+    await setAuthorizationHeader();
+    const endpoint = `${process.env.EXPO_PUBLIC_SERVER_URI}/delete-notification/${notification.id}`;
+    const res = await axios.delete(endpoint, { timeout: 10000 });
+    return res.data.notification;
+  } catch (error) {
+    console.error("Error deleting notification:", error);
+    throw error;
+  }
 };
 
-// Custom hook to fetch and manage notifications
- export const useNotification = () => {
-  const queryClient = useQueryClient(); // Used to manually refetch or update cache
+/**
+ * Custom hook to fetch and manage notifications
+ */
+export const useNotification = () => {
+  const queryClient = useQueryClient();
+  
+  // Add state to control when the query runs
+  const [isReady, setIsReady] = useState(false);
+  
+  // Delay query execution slightly to avoid bridge issues
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsReady(true);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
-  // useQuery for fetching notifications
-  const { data: notificationsData = [], isLoading, isError } = useQuery({
-    queryKey: ["notifications"], // Unique key for caching the data
-    queryFn: fetchNotifications, // Function that fetches the notifications
-    retry: 2, // Retry the request up to 2 times if it fails
+  // Fetch notifications
+  const { 
+    data: notificationsData = [], 
+    isLoading, 
+    isError 
+  } = useQuery({
+    queryKey: ["notifications"],
+    queryFn: fetchNotifications,
+    retry: 1,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 30 * 60 * 1000, // 30 minutes
+    refetchOnWindowFocus: false,
+    enabled: isReady,
   });
 
-  // useMutation for deleting a notification
+  // Delete notification mutation
   const deleteMutation = useMutation({
-    mutationFn: (notification: NotificationType) => deleteNotification(notification), // Function to delete a specific notification
+    mutationFn: (notification: NotificationType) => deleteNotification(notification),
     onSuccess: () => {
-      // After successful deletion, refetch notifications to keep UI in sync
       queryClient.invalidateQueries({ queryKey: ["notifications"] });
     },
   });
 
-  // Handler function to trigger the mutation
+  // Handler function to delete a notification
   const notificationDeleteHandler = (item: NotificationType) => {
-    deleteMutation.mutate(item); // Pass the notification to be deleted
+    deleteMutation.mutate(item);
   };
 
-  // Return everything needed by the component
   return {
-    notificationsData,         // List of notifications
-    isLoading,                 // Loading state
-    isError,                   // Error state
-    notificationDeleteHandler, // Function to delete a notification
+    notificationsData,
+    isLoading: !isReady || isLoading,
+    isError,
+    notificationDeleteHandler,
+    isDeletingNotification: deleteMutation.isPending,
   };
 };

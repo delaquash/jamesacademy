@@ -2,22 +2,30 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "module": "ES2022",
+    "moduleResolution": "bundler", // Changed from "node"
     "jsx": "react",
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
-    // "allowJs": true,
     "esModuleInterop": true,
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
-    }
+      "@/*": ["./*"]
+    },
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "assets/svg/onboarding/1.jsx", "assets/svg/onboarding/2.jsx"  ]
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
